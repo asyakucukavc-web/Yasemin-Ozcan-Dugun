@@ -1,495 +1,1275 @@
+cat > /mnt/user-data/outputs/wedding-invitation.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yasemin & Özcan Davetiye</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yasemin & Özcan | Düğün Davetiyesi</title>
 
-    <style>
-        :root {
-            --bg-pink: #FFF0F5;
-            --bg-blue: #E6F2F8;
-            --primary-pink: #F4C2C2;
-            --primary-blue: #A9C9E2;
-            --text-dark: #4A4A4A;
-            --gold: #D4AF37;
-        }
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Great+Vibes&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<!-- Libraries -->
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, var(--bg-pink) 0%, var(--bg-blue) 100%);
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
+<style>
+  :root {
+    --blush: #f4c6d0;
+    --blush-light: #fde8ed;
+    --sky: #b8d8ea;
+    --sky-light: #e0f0f8;
+    --sage: #c8d9c0;
+    --cream: #fdf8f2;
+    --petal: #f9e0e8;
+    --dusty-rose: #e8a0b0;
+    --lavender: #d4c5e8;
+    --gold: #c8a96e;
+    --text-dark: #4a3840;
+    --text-mid: #7a6070;
+    --text-light: #a89098;
+  }
 
-        .script-font {
-            font-family: 'Alex Brush', cursive;
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* Smooth Scroll (Lenis) Ayarı */
-        html.lenis {
-            height: auto;
-        }
-        .lenis-smooth {
-            scroll-behavior: auto !important;
-        }
+  html { scroll-behavior: smooth; }
 
-        /* --- SAKLAMA / GÖSTERME SINIFLARI --- */
-        #main-content {
-            display: none; /* Zarf açılana kadar ana içerik gizli */
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
+  body {
+    background: var(--cream);
+    font-family: 'Jost', sans-serif;
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
 
-        /* --- 1. EKRAN: PRE-LOADER & ZARF SAHNESİ --- */
-        .envelope-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(135deg, #fce4ec 0%, #e3f2fd 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            perspective: 1000px;
-        }
+  /* ─── ENVELOPE OVERLAY ─── */
+  #envelope-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8e8ee 0%, #e8f4fc 50%, #f0ead8 100%);
+    cursor: pointer;
+  }
 
-        .envelope-container {
-            position: relative;
-            width: 360px;
-            height: 260px;
-            background: #fff;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            border-radius: 4px;
-            cursor: pointer;
-            transform-style: preserve-3d;
-        }
+  .env-scene {
+    position: relative;
+    width: min(420px, 90vw);
+    height: min(300px, 65vw);
+    filter: drop-shadow(0 20px 60px rgba(180,120,140,0.3));
+  }
 
-        /* Zarfın Arkası ve Yan Kanatları Görsel İllüzyonu */
-        .envelope-container::before {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; width: 0; height: 0;
-            border-left: 180px solid transparent;
-            border-right: 180px solid transparent;
-            border-bottom: 130px solid #f9f9f9;
-            z-index: 3;
-        }
-        .envelope-container::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; width: 0; height: 0;
-            border-top: 130px solid transparent;
-            border-bottom: 130px solid transparent;
-            border-left: 180px solid #f1f1f1;
-            z-index: 2;
-        }
+  /* Envelope body */
+  .env-body {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, #fff5f8 0%, #fce8f0 100%);
+    border-radius: 4px 4px 12px 12px;
+    border: 1.5px solid rgba(200,140,160,0.3);
+    overflow: hidden;
+  }
 
-        .envelope-flap {
-            position: absolute;
-            top: 0; left: 0; width: 0; height: 0;
-            border-left: 180px solid transparent;
-            border-right: 180px solid transparent;
-            border-top: 130px solid #e0e0e0;
-            transform-origin: top center;
-            z-index: 4;
-        }
+  .env-body::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 55%;
+    background: linear-gradient(170deg, #fdf0f5 0%, #f8e0ea 100%);
+    clip-path: polygon(0 30%, 50% 0%, 100% 30%, 100% 100%, 0 100%);
+  }
 
-        .seal {
-            position: absolute;
-            top: 110px;
-            left: 155px;
-            width: 50px;
-            height: 50px;
-            background: var(--gold);
-            border-radius: 50%;
-            z-index: 5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-family: 'Alex Brush', cursive;
-            font-size: 24px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            transition: transform 0.3s;
-        }
+  /* Left flap */
+  .env-flap-left {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 50%; height: 58%;
+    background: linear-gradient(135deg, #fce8f0, #f5d8e8);
+    clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%);
+    border-right: 1px solid rgba(200,140,160,0.2);
+  }
 
-        .envelope-container:hover .seal {
-            transform: scale(1.1);
-        }
+  /* Right flap */
+  .env-flap-right {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 50%; height: 58%;
+    background: linear-gradient(225deg, #fce8f0, #f5d8e8);
+    clip-path: polygon(100% 0, 0 30%, 0 100%, 100% 100%);
+  }
 
-        .envelope-text {
-            position: absolute;
-            bottom: -50px;
-            width: 100%;
-            text-align: center;
-            font-size: 14px;
-            letter-spacing: 2px;
-            color: #757575;
-            animation: pulse 1.5s infinite;
-        }
+  /* Top flap */
+  .env-flap-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 55%;
+    background: linear-gradient(170deg, #fde0ea, #f8c8d8);
+    clip-path: polygon(0 0, 50% 75%, 100% 0);
+    transform-origin: top center;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 3;
+  }
 
-        /* Zarf İçi Kart */
-        .letter-card {
-            position: absolute;
-            top: 10px;
-            left: 15px;
-            width: 330px;
-            height: 240px;
-            background: linear-gradient(to bottom, #fff, var(--bg-pink));
-            z-index: 1;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid #eee;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+  .env-flap-top.open {
+    transform: rotateX(180deg);
+  }
 
-        .letter-card h2 {
-            font-size: 32px;
-            color: var(--text-dark);
-            margin-bottom: 10px;
-        }
+  /* Wax seal */
+  .env-seal {
+    position: absolute;
+    top: 40%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px; height: 64px;
+    z-index: 4;
+    transition: opacity 0.3s, transform 0.3s;
+  }
 
-        /* --- LOTTIE AMBİYANS ALANLARI --- */
-        .lottie-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 10;
-        }
+  .env-seal.hidden {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
 
-        /* --- ANA İÇERİK TASARIMI --- */
-        .hero-section {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            padding: 20px;
-        }
+  .seal-circle {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #e8a0b8, #c07090);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(160,80,110,0.4), inset 0 1px 3px rgba(255,255,255,0.4);
+    font-family: 'Great Vibes', cursive;
+    color: white;
+    font-size: 26px;
+    letter-spacing: 0;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
 
-        .hero-names {
-            font-size: 75px;
-            color: var(--text-dark);
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
-        }
+  /* Card inside envelope */
+  .env-card {
+    position: absolute;
+    bottom: 8%;
+    left: 10%; right: 10%;
+    height: 80%;
+    background: white;
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    z-index: 2;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 20px rgba(180,120,140,0.15);
+    overflow: hidden;
+  }
 
-        .hero-tagline {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-bottom: 40px;
-            color: #777;
-        }
+  .env-card.rise {
+    transform: translateY(-120%);
+  }
 
-        /* --- GERİ SAYIM (COUNTDOWN) --- */
-        .countdown-container {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            padding: 20px 40px;
-            border-radius: 50px;
-            display: flex;
-            gap: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.8);
-        }
+  .env-card-inner {
+    text-align: center;
+    padding: 16px;
+  }
 
-        .countdown-item {
-            text-align: center;
-        }
+  .env-card-inner p {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(22px, 5vw, 32px);
+    color: var(--dusty-rose);
+    line-height: 1.3;
+  }
 
-        .countdown-number {
-            font-size: 32px;
-            font-weight: 300;
-            color: var(--text-dark);
-            display: block;
-        }
+  .env-card-inner span {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    display: block;
+    margin-top: 6px;
+  }
 
-        .countdown-label {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #999;
-        }
+  /* Envelope decoration lines */
+  .env-deco {
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(200,140,160,0.2);
+    border-radius: 4px;
+    pointer-events: none;
+  }
 
-        /* --- FOTOĞRAF GALERİSİ (PREMIUM SWIPER) --- */
-        .gallery-section {
-            padding: 100px 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+  /* Click hint */
+  .env-hint {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    white-space: nowrap;
+    animation: pulse-hint 2s ease-in-out infinite;
+  }
 
-        .swiper {
-            width: 100%;
-            padding-top: 50px;
-            padding-bottom: 50px;
-        }
+  @keyframes pulse-hint {
+    0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+  }
 
-        .swiper-slide {
-            background-position: center;
-            background-size: cover;
-            width: 300px;
-            height: 400px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            border: 8px solid #fff;
-            overflow: hidden;
-        }
+  .env-flowers-left, .env-flowers-right {
+    position: absolute;
+    top: -30px;
+    pointer-events: none;
+  }
+  .env-flowers-left { left: -40px; }
+  .env-flowers-right { right: -40px; transform: scaleX(-1); }
 
-        .swiper-slide img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+  /* ─── FLOATING PARTICLES ─── */
+  #particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
 
-        /* --- DETAYLAR VE LOKASYON --- */
-        .details-section {
-            padding: 80px 20px;
-            text-align: center;
-            background: rgba(255,255,255,0.4);
-            margin: 40px 20px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.6);
-        }
+  .particle {
+    position: absolute;
+    font-size: 18px;
+    animation: float-particle linear infinite;
+    opacity: 0;
+  }
 
-        .details-title {
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
+  @keyframes float-particle {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.4; }
+    100% { transform: translateY(-50px) rotate(360deg) translateX(80px); opacity: 0; }
+  }
 
-        .info-text {
-            font-size: 18px;
-            line-height: 1.8;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
+  /* ─── BIRDS ─── */
+  .bird-container {
+    position: fixed;
+    pointer-events: none;
+    z-index: 2;
+  }
 
-        .gold-line {
-            width: 60px;
-            height: 1px;
-            background: var(--gold);
-            margin: 20px auto;
-        }
+  .bird {
+    position: absolute;
+    font-size: 22px;
+    animation: fly-bird 12s linear infinite;
+    opacity: 0;
+  }
 
-        /* --- ANIMASYONLAR --- */
-        @keyframes pulse {
-            0% { transform: translateY(0); opacity: 0.6; }
-            50% { transform: translateY(-5px); opacity: 1; }
-            100% { transform: translateY(0); opacity: 0.6; }
-        }
+  @keyframes fly-bird {
+    0% { transform: translateX(-120px) translateY(0) scaleX(1); opacity: 0; }
+    5% { opacity: 0.8; }
+    45% { transform: translateX(50vw) translateY(-30px) scaleX(1); }
+    50% { transform: translateX(50vw) translateY(-30px) scaleX(-1); }
+    95% { opacity: 0.8; }
+    100% { transform: translateX(-120px) translateY(0) scaleX(-1); opacity: 0; }
+  }
 
-        /* Mobil Optimizasyon */
-        @media (max-width: 480px) {
-            .hero-names { font-size: 55px; }
-            .countdown-container { padding: 15px 25px; gap: 15px; }
-            .countdown-number { font-size: 24px; }
-            .swiper-slide { width: 260px; height: 360px; }
-            .envelope-container { transform: scale(0.85); }
-        }
-    </style>
+  /* ─── MAIN CONTENT ─── */
+  #main-content {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    position: relative;
+    z-index: 10;
+  }
+
+  #main-content.visible { opacity: 1; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 60px 20px;
+    overflow: hidden;
+    background: linear-gradient(170deg, #fde8ed 0%, #fdf4f8 30%, #e8f4fc 70%, #fdf8f2 100%);
+  }
+
+  .hero-bg-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(244,198,208,0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(184,216,234,0.3) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(212,197,232,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-corner { position: absolute; pointer-events: none; }
+  .hero-corner.tl { top: 20px; left: 20px; }
+  .hero-corner.tr { top: 20px; right: 20px; transform: scaleX(-1); }
+  .hero-corner.bl { bottom: 20px; left: 20px; transform: scaleY(-1); }
+  .hero-corner.br { bottom: 20px; right: 20px; transform: scale(-1); }
+
+  .hero-divider {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--dusty-rose), transparent);
+    margin: 20px auto;
+  }
+
+  .hero-label {
+    font-family: 'Jost', sans-serif;
+    font-weight: 200;
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 24px;
+  }
+
+  .hero-names {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(60px, 14vw, 110px);
+    color: var(--dusty-rose);
+    line-height: 1;
+    text-align: center;
+    text-shadow: 0 4px 30px rgba(200,100,130,0.15);
+    position: relative;
+  }
+
+  .hero-amp {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(30px, 7vw, 55px);
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+    line-height: 1.2;
+    margin: 4px 0;
+  }
+
+  .hero-date-box {
+    margin: 32px 0;
+    text-align: center;
+  }
+
+  .hero-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 4vw, 28px);
+    font-weight: 300;
+    letter-spacing: 8px;
+    color: var(--text-mid);
+    text-transform: uppercase;
+  }
+
+  .hero-time {
+    font-family: 'Jost', sans-serif;
+    font-weight: 200;
+    font-size: 13px;
+    letter-spacing: 5px;
+    color: var(--text-light);
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+
+  .hero-flower-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 16px 0;
+    font-size: 22px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .scroll-hint span {
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+  }
+
+  .scroll-arrow {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--dusty-rose), transparent);
+    animation: scroll-drop 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-drop {
+    0%, 100% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+    30% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+    70% { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+    100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+  }
+
+  /* ─── SECTION BASE ─── */
+  section {
+    padding: 80px 20px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-family: 'Jost', sans-serif;
+    font-weight: 200;
+    font-size: 10px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(36px, 8vw, 60px);
+    color: var(--dusty-rose);
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 16px 0 40px;
+  }
+
+  .ornament-line {
+    height: 1px;
+    width: 60px;
+    background: linear-gradient(to right, transparent, var(--blush));
+  }
+
+  .ornament-line.rev {
+    background: linear-gradient(to left, transparent, var(--blush));
+  }
+
+  .ornament-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--dusty-rose);
+    opacity: 0.6;
+  }
+
+  /* ─── COUNTDOWN ─── */
+  .countdown-section {
+    background: linear-gradient(135deg, #fde8ed 0%, #e8f4fc 100%);
+    padding: 60px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .countdown-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f4c6d0' fill-opacity='0.2'%3E%3Cpath d='M30 30c0-11 9-20 20-20v40c-11 0-20-9-20-20zm0 0c0 11-9 20-20 20V10c11 0 20 9 20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+
+  .countdown-grid {
+    display: flex;
+    justify-content: center;
+    gap: clamp(12px, 3vw, 32px);
+    flex-wrap: wrap;
+    margin-top: 32px;
+    position: relative;
+  }
+
+  .count-item {
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: clamp(16px, 3vw, 28px) clamp(20px, 4vw, 40px);
+    min-width: clamp(70px, 16vw, 100px);
+    border: 1px solid rgba(244,198,208,0.4);
+    box-shadow: 0 8px 32px rgba(200,120,140,0.1);
+  }
+
+  .count-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 8vw, 56px);
+    font-weight: 300;
+    color: var(--dusty-rose);
+    display: block;
+    line-height: 1;
+  }
+
+  .count-label {
+    font-family: 'Jost', sans-serif;
+    font-weight: 200;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* ─── LOVE STORY / POEM ─── */
+  .poem-section {
+    text-align: center;
+    padding: 80px 20px;
+    position: relative;
+  }
+
+  .poem-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(253,240,245,0.9));
+    border: 1px solid rgba(244,198,208,0.4);
+    border-radius: 24px;
+    padding: clamp(32px, 6vw, 64px);
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 20px 80px rgba(200,120,140,0.1), 0 4px 20px rgba(200,120,140,0.05);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .poem-card::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 200px;
+    color: rgba(244,198,208,0.2);
+    position: absolute;
+    top: -20px; left: 10px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .poem-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(16px, 3.5vw, 22px);
+    color: var(--text-mid);
+    line-height: 2;
+  }
+
+  /* ─── PHOTOS ─── */
+  .photos-section {
+    padding: 80px 20px;
+    background: linear-gradient(180deg, #fdf8f2 0%, #f8eef3 50%, #fdf8f2 100%);
+  }
+
+  .photos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(12px, 2vw, 24px);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .photo-frame {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, var(--blush-light), var(--sky-light));
+    border: 2px solid rgba(244,198,208,0.4);
+    box-shadow: 0 12px 40px rgba(180,120,140,0.15);
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.4s;
+  }
+
+  .photo-frame:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 24px 60px rgba(180,120,140,0.25);
+  }
+
+  .photo-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--text-light);
+  }
+
+  .photo-placeholder .ph-icon { font-size: 40px; opacity: 0.5; }
+
+  .photo-placeholder p {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .photo-frame-deco {
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 12px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* ─── DETAILS CARDS ─── */
+  .details-section {
+    padding: 80px 20px;
+  }
+
+  .detail-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .detail-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(253,240,245,0.95));
+    border: 1px solid rgba(244,198,208,0.35);
+    border-radius: 20px;
+    padding: 36px 24px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(200,120,140,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .detail-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(200,120,140,0.15);
+  }
+
+  .detail-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+
+  .detail-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--dusty-rose);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+
+  .detail-card p {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.7;
+  }
+
+  /* ─── VENUE ─── */
+  .venue-section {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #e8f4fc 0%, #fde8ed 100%);
+    text-align: center;
+  }
+
+  .venue-map-placeholder {
+    max-width: 500px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(184,216,234,0.5);
+    border-radius: 20px;
+    padding: 60px 32px;
+    box-shadow: 0 12px 40px rgba(100,160,200,0.1);
+  }
+
+  .venue-map-placeholder .map-icon { font-size: 48px; margin-bottom: 16px; }
+
+  .venue-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 5vw, 32px);
+    font-style: italic;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+  }
+
+  .venue-address {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--text-light);
+    letter-spacing: 1px;
+  }
+
+  .venue-badge {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 28px;
+    background: linear-gradient(135deg, var(--sky), var(--blush));
+    border-radius: 50px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: white;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+
+  /* ─── RSVP ─── */
+  .rsvp-section {
+    padding: 80px 20px;
+    text-align: center;
+  }
+
+  .rsvp-card {
+    max-width: 480px;
+    margin: 0 auto;
+    background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(253,240,245,0.9));
+    border: 1px solid rgba(244,198,208,0.4);
+    border-radius: 28px;
+    padding: clamp(32px, 6vw, 56px);
+    box-shadow: 0 20px 80px rgba(200,120,140,0.1);
+  }
+
+  .rsvp-card p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 3vw, 20px);
+    color: var(--text-mid);
+    line-height: 1.8;
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+
+  .rsvp-btn {
+    display: inline-block;
+    padding: 16px 40px;
+    background: linear-gradient(135deg, #e8a0b0, #c870a0);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    box-shadow: 0 8px 32px rgba(200,100,140,0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .rsvp-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px rgba(200,100,140,0.4);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 60px 20px 40px;
+    text-align: center;
+    background: linear-gradient(to bottom, #fdf8f2, #fde8ed);
+  }
+
+  .footer-names {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(40px, 9vw, 65px);
+    color: var(--dusty-rose);
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+
+  .footer-tagline {
+    font-family: 'Jost', sans-serif;
+    font-weight: 200;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 32px;
+  }
+
+  .footer-flowers { font-size: 24px; margin-bottom: 20px; }
+
+  .footer-copy {
+    font-family: 'Jost', sans-serif;
+    font-weight: 200;
+    font-size: 11px;
+    color: var(--text-light);
+    opacity: 0.6;
+    letter-spacing: 2px;
+  }
+
+  /* ─── FLOATING FLORAL ELEMENTS ─── */
+  .floral-divider {
+    text-align: center;
+    font-size: 28px;
+    padding: 16px 0;
+    opacity: 0.7;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 480px) {
+    .env-scene { width: 90vw; height: 60vw; }
+    .env-hint { font-size: 9px; letter-spacing: 3px; bottom: -42px; }
+    .photos-grid { grid-template-columns: repeat(2, 1fr); }
+    .detail-cards { grid-template-columns: 1fr; }
+    .env-flowers-left, .env-flowers-right { display: none; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes sway {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+
+  .hero-names { animation: hero-appear 1.5s cubic-bezier(0.4, 0, 0.2, 1) both; }
+  @keyframes hero-appear {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
 </head>
 <body>
 
-    <div class="lottie-bg" id="lottie-ambience"></div>
+<!-- Particles -->
+<div id="particles"></div>
 
-    <div class="envelope-wrapper" id="envelope-screen">
-        <div class="envelope-container" id="envelope">
-            <div class="envelope-flap" id="flap"></div>
-            <div class="letter-card" id="card">
-                <h2 class="script-font">Düğünümüze Davetlisiniz</h2>
-                <p style="font-size: 12px; letter-spacing: 2px; color: var(--gold);">YASEMİN & ÖZCAN</p>
-            </div>
-            <div class="seal" id="seal">YÖ</div>
+<!-- Bird Container -->
+<div class="bird-container" id="birds"></div>
+
+<!-- ═══ ENVELOPE OVERLAY ═══ -->
+<div id="envelope-overlay" onclick="openEnvelope()">
+  <div class="env-scene">
+
+    <!-- Decorative flowers SVG left -->
+    <div class="env-flowers-left">
+      <svg width="80" height="120" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40 110 C40 80, 20 70, 10 50 C5 35, 15 20, 30 25 C35 12, 50 12, 55 25 C70 20, 80 35, 75 50 C65 70, 45 80, 40 110Z" fill="#f4c6d0" opacity="0.6"/>
+        <circle cx="40" cy="40" r="8" fill="#e8a0b0" opacity="0.7"/>
+        <ellipse cx="20" cy="45" rx="12" ry="8" fill="#fde0e8" opacity="0.8" transform="rotate(-30 20 45)"/>
+        <ellipse cx="60" cy="45" rx="12" ry="8" fill="#fde0e8" opacity="0.8" transform="rotate(30 60 45)"/>
+        <ellipse cx="40" cy="25" rx="8" ry="12" fill="#fce8f0" opacity="0.8"/>
+        <ellipse cx="40" cy="55" rx="8" ry="12" fill="#fce8f0" opacity="0.8"/>
+      </svg>
+    </div>
+
+    <div class="env-flowers-right">
+      <svg width="80" height="120" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40 110 C40 80, 20 70, 10 50 C5 35, 15 20, 30 25 C35 12, 50 12, 55 25 C70 20, 80 35, 75 50 C65 70, 45 80, 40 110Z" fill="#b8d8ea" opacity="0.5"/>
+        <circle cx="40" cy="40" r="8" fill="#90c8e0" opacity="0.6"/>
+        <ellipse cx="20" cy="45" rx="12" ry="8" fill="#d0eaf8" opacity="0.8" transform="rotate(-30 20 45)"/>
+        <ellipse cx="60" cy="45" rx="12" ry="8" fill="#d0eaf8" opacity="0.8" transform="rotate(30 60 45)"/>
+        <ellipse cx="40" cy="25" rx="8" ry="12" fill="#e0f4ff" opacity="0.8"/>
+        <ellipse cx="40" cy="55" rx="8" ry="12" fill="#e0f4ff" opacity="0.8"/>
+      </svg>
+    </div>
+
+    <div class="env-body">
+      <div class="env-deco"></div>
+      <div class="env-flap-left"></div>
+      <div class="env-flap-right"></div>
+      <div class="env-card" id="env-card">
+        <div class="env-card-inner">
+          <p>Yasemin & Özcan</p>
+          <span>düğün davetiyesi</span>
         </div>
-        <div class="envelope-text">Açmak İçin Mühre Dokunun</div>
+      </div>
     </div>
 
-    <div id="main-content">
-        
-        <section class="hero-section">
-            <div data-aos="zoom-in" data-aos-duration="1200">
-                <h1 class="hero-names script-font">Yasemin & Özcan</h1>
-                <p class="hero-tagline">Evleniyoruz</p>
-            </div>
+    <div class="env-flap-top" id="env-flap-top"></div>
 
-            <div class="countdown-container" data-aos="fade-up" data-aos-delay="300">
-                <div class="countdown-item">
-                    <span class="countdown-number" id="days">00</span>
-                    <span class="countdown-label">Gün</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="hours">00</span>
-                    <span class="countdown-label">Saat</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="minutes">00</span>
-                    <span class="countdown-label">Dakika</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="seconds">00</span>
-                    <span class="countdown-label">Saniye</span>
-                </div>
-            </div>
-        </section>
+    <div class="env-seal" id="env-seal">
+      <div class="seal-circle">Y&Ö</div>
+    </div>
+  </div>
 
-        <section class="gallery-section" data-aos="fade-up">
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="foto1.jpeg" alt="Yasemin & Özcan 1">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="foto2.jpeg" alt="Yasemin & Özcan 2">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600" alt="Bahar Teması">
-                    </div>
-                </div>
-            </div>
-        </section>
+  <div class="env-hint">✦ açmak için dokunun ✦</div>
+</div>
 
-        <section class="details-section" data-aos="fade-up">
-            <h2 class="details-title script-font">Sonsuz Mutluluğa Doğru</h2>
-            <div class="gold-line"></div>
-            <p class="info-text" style="font-weight: 500;">18 Ağustos Pazartesi</p>
-            <p class="info-text" style="font-size: 16px; color: #666;">Saat: 20:00</p>
-            <div class="gold-line"></div>
-            <p class="info-text" style="font-size: 15px; font-style: italic;">"Bu güzel günümüzde yanımızda olmanızdan mutluluk duyarız."</p>
-            <p class="info-text" style="font-size: 13px; color: #888; margin-top: 30px; letter-spacing: 2px;">LOKASYON BİLGİSİ YAKINDA PAYLAŞILACAKTIR</p>
-        </section>
+<!-- ═══ MAIN CONTENT ═══ -->
+<div id="main-content">
 
+  <!-- ─── HERO ─── -->
+  <div class="hero">
+    <div class="hero-bg-pattern"></div>
+
+    <!-- Corner ornaments -->
+    <div class="hero-corner tl">
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+        <path d="M5 75 Q5 5 75 5" stroke="#f4c6d0" stroke-width="1" fill="none" opacity="0.6"/>
+        <path d="M5 60 Q5 15 60 5" stroke="#b8d8ea" stroke-width="0.8" fill="none" opacity="0.4"/>
+        <circle cx="8" cy="8" r="3" fill="#f4c6d0" opacity="0.6"/>
+        <circle cx="18" cy="5" r="2" fill="#b8d8ea" opacity="0.5"/>
+        <circle cx="5" cy="18" r="2" fill="#d4c5e8" opacity="0.5"/>
+        <text x="12" y="22" font-size="14" opacity="0.4">🌸</text>
+      </svg>
+    </div>
+    <div class="hero-corner tr">
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+        <path d="M5 75 Q5 5 75 5" stroke="#f4c6d0" stroke-width="1" fill="none" opacity="0.6"/>
+        <path d="M5 60 Q5 15 60 5" stroke="#b8d8ea" stroke-width="0.8" fill="none" opacity="0.4"/>
+        <circle cx="8" cy="8" r="3" fill="#f4c6d0" opacity="0.6"/>
+        <circle cx="18" cy="5" r="2" fill="#b8d8ea" opacity="0.5"/>
+        <circle cx="5" cy="18" r="2" fill="#d4c5e8" opacity="0.5"/>
+        <text x="12" y="22" font-size="14" opacity="0.4">🌸</text>
+      </svg>
+    </div>
+    <div class="hero-corner bl">
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+        <path d="M5 75 Q5 5 75 5" stroke="#f4c6d0" stroke-width="1" fill="none" opacity="0.6"/>
+        <path d="M5 60 Q5 15 60 5" stroke="#b8d8ea" stroke-width="0.8" fill="none" opacity="0.4"/>
+        <circle cx="8" cy="8" r="3" fill="#f4c6d0" opacity="0.6"/>
+        <text x="12" y="22" font-size="14" opacity="0.4">🌿</text>
+      </svg>
+    </div>
+    <div class="hero-corner br">
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+        <path d="M5 75 Q5 5 75 5" stroke="#f4c6d0" stroke-width="1" fill="none" opacity="0.6"/>
+        <path d="M5 60 Q5 15 60 5" stroke="#b8d8ea" stroke-width="0.8" fill="none" opacity="0.4"/>
+        <circle cx="8" cy="8" r="3" fill="#f4c6d0" opacity="0.6"/>
+        <text x="12" y="22" font-size="14" opacity="0.4">🌿</text>
+      </svg>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
+    <p class="hero-label" data-aos="fade-down">sizi en mutlu günümüze davet ediyoruz</p>
+    <div class="hero-divider"></div>
 
-    <script>
-        // 1. SMOOTH SCROLL (Lenis) ENTEGRASYONU
-        const lenis = new Lenis();
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
+    <div class="hero-names" data-aos="fade-up" data-aos-delay="100">
+      Yasemin
+      <span class="hero-amp">&</span>
+      Özcan
+    </div>
 
-        // 2. LOTTIE BAHAR VE KUŞ ANİMASYONLARI
-        // LottieFiles'dan aldığımız şık bir uçan kuşlar / dökülen çiçek animasyonu linki
-        lottie.loadAnimation({
-            container: document.getElementById('lottie-ambience'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: 'https://assets2.lottiefiles.com/packages/lf20_m9b86scw.json' // Romantik bahar / yaprak dökümü efekti
-        });
+    <div class="hero-flower-row" data-aos="fade-up" data-aos-delay="200">
+      🌸 🌷 🌼 🌸 🌷
+    </div>
 
-        // 3. GSAP İLE ETKİLEŞİMLİ ZARF AÇILMA ANİMASYONU
-        const envelope = document.getElementById('envelope');
-        const seal = document.getElementById('seal');
-        const flap = document.getElementById('flap');
-        const card = document.getElementById('card');
-        const envelopeScreen = document.getElementById('envelope-screen');
-        const mainContent = document.getElementById('main-content');
+    <div class="hero-date-box" data-aos="fade-up" data-aos-delay="300">
+      <p class="hero-date">18 Ağustos 2025</p>
+      <p class="hero-time">Saat 20.00</p>
+    </div>
 
-        envelope.addEventListener('click', () => {
-            let tl = gsap.timeline();
+    <div class="hero-divider"></div>
 
-            // Mührü kır/kaybet
-            tl.to(seal, { duration: 0.3, opacity: 0, scale: 0 });
-            
-            // Zarf kapağını yukarı doğru aç (3D Dönüş)
-            tl.to(flap, { duration: 0.6, rotateX: 180, ease: "power1.inOut" }, "-=0.1");
-            
-            // Kartı zarfın içinden yukarı doğru kaydır
-            tl.to(card, { duration: 0.8, y: -120, zIndex: 10, ease: "power2.out" });
-            
-            // Tüm zarf ekranını soft bir şekilde yok et ve ana içeriği getir
-            tl.to(envelopeScreen, { 
-                duration: 0.8, 
-                opacity: 0, 
-                y: -50,
-                onComplete: () => {
-                    envelopeScreen.style.display = 'none';
-                    mainContent.style.display = 'block';
-                    setTimeout(() => {
-                        mainContent.style.opacity = 1;
-                        // AOS ve Swiper'ı tetikle
-                        AOS.init({ duration: 1000, once: true });
-                        initSwiper();
-                    }, 50);
-                }
-            }, "+=0.3");
-        });
+    <div class="scroll-hint">
+      <span>keşfet</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </div>
 
-        // 4. PREMIUM SWIPER (Coverflow Efekti)
-        function initSwiper() {
-            new Swiper(".mySwiper", {
-                effect: "coverflow",
-                grabCursor: true,
-                centeredSlides: true,
-                slidesPerView: "auto",
-                coverflowEffect: {
-                    rotate: 20,
-                    stretch: 0,
-                    depth: 100,
-                    modifier: 1,
-                    slideShadows: false,
-                },
-                loop: true,
-                autoplay: {
-                    delay: 3000,
-                    disableOnInteraction: false,
-                }
-            });
-        }
+  <!-- ─── COUNTDOWN ─── -->
+  <div class="countdown-section">
+    <p class="section-tag" data-aos="fade-up">düğüne kalan süre</p>
+    <h2 class="section-title" data-aos="fade-up">Geri Sayım</h2>
+    <div class="countdown-grid" id="countdown">
+      <div class="count-item" data-aos="zoom-in" data-aos-delay="0">
+        <span class="count-num" id="days">--</span>
+        <span class="count-label">Gün</span>
+      </div>
+      <div class="count-item" data-aos="zoom-in" data-aos-delay="80">
+        <span class="count-num" id="hours">--</span>
+        <span class="count-label">Saat</span>
+      </div>
+      <div class="count-item" data-aos="zoom-in" data-aos-delay="160">
+        <span class="count-num" id="minutes">--</span>
+        <span class="count-label">Dakika</span>
+      </div>
+      <div class="count-item" data-aos="zoom-in" data-aos-delay="240">
+        <span class="count-num" id="seconds">--</span>
+        <span class="count-label">Saniye</span>
+      </div>
+    </div>
+  </div>
 
-        // 5. GERİ SAYIM (COUNTDOWN) SİSTEMİ
-        const weddingDate = new Date("Aug 18, 2026 20:00:00").getTime();
+  <!-- ─── POEM ─── -->
+  <section class="poem-section">
+    <p class="section-tag" data-aos="fade-up">sevgimiz</p>
+    <h2 class="section-title" data-aos="fade-up">Birlikte</h2>
+    <div class="ornament" data-aos="fade-up">
+      <div class="ornament-line rev"></div>
+      <div class="ornament-dot"></div>
+      <div class="ornament-dot" style="opacity:0.3"></div>
+      <div class="ornament-dot"></div>
+      <div class="ornament-line"></div>
+    </div>
+    <div class="poem-card" data-aos="fade-up" data-aos-delay="100">
+      <p class="poem-text">
+        İki kalbin bir araya gelişi,<br>
+        baharın çiçekleri gibi açsın,<br>
+        sevinçle, umutla ve sevgiyle dolu<br>
+        bu yeni yolculukta bize eşlik edin.
+      </p>
+    </div>
+  </section>
 
-        const timer = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
+  <div class="floral-divider" data-aos="fade-up">🌸 🌿 🌷 🌿 🌸</div>
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  <!-- ─── PHOTOS ─── -->
+  <div class="photos-section">
+    <div style="max-width:860px;margin:0 auto">
+      <p class="section-tag" data-aos="fade-up" style="text-align:center">anılarımız</p>
+      <h2 class="section-title" data-aos="fade-up">Fotoğraflarımız</h2>
+      <div class="ornament" data-aos="fade-up">
+        <div class="ornament-line rev"></div>
+        <div class="ornament-dot"></div>
+        <div class="ornament-dot" style="opacity:0.3"></div>
+        <div class="ornament-dot"></div>
+        <div class="ornament-line"></div>
+      </div>
+      <div class="photos-grid">
+        <div class="photo-frame" data-aos="fade-up" data-aos-delay="0">
+          <!-- Fotoğraf 1: src'yi kendi fotoğrafınızla değiştirin -->
+          <img src="photo1.jpeg" alt="Yasemin & Özcan"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="photo-placeholder" style="display:none">
+            <div class="ph-icon">🌸</div>
+            <p>Fotoğraf 1</p>
+            <p style="font-size:9px;opacity:0.6;margin-top:4px">photo1.jpeg</p>
+          </div>
+          <div class="photo-frame-deco"></div>
+        </div>
 
-            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+        <div class="photo-frame" data-aos="fade-up" data-aos-delay="100">
+          <!-- Fotoğraf 2: src'yi kendi fotoğrafınızla değiştirin -->
+          <img src="photo2.jpeg" alt="Yasemin & Özcan"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="photo-placeholder" style="display:none">
+            <div class="ph-icon">🌷</div>
+            <p>Fotoğraf 2</p>
+            <p style="font-size:9px;opacity:0.6;margin-top:4px">photo2.jpeg</p>
+          </div>
+          <div class="photo-frame-deco"></div>
+        </div>
 
-            if (distance < 0) {
-                clearInterval(timer);
-                document.querySelector(".countdown-container").innerHTML = "<p style='padding:10px;'>O Büyük Gün Geldi!</p>";
-            }
-        }, 1000);
-    </script>
+        <!-- Boş yer - isterseniz photo3.jpeg ile doldurabilirsiniz -->
+        <div class="photo-frame" data-aos="fade-up" data-aos-delay="200">
+          <img src="photo3.jpeg" alt="Yasemin & Özcan"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="photo-placeholder" style="display:none">
+            <div class="ph-icon">🌼</div>
+            <p>Fotoğraf 3</p>
+            <p style="font-size:9px;opacity:0.6;margin-top:4px">photo3.jpeg</p>
+          </div>
+          <div class="photo-frame-deco"></div>
+        </div>
+
+        <div class="photo-frame" data-aos="fade-up" data-aos-delay="300">
+          <img src="photo4.jpeg" alt="Yasemin & Özcan"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="photo-placeholder" style="display:none">
+            <div class="ph-icon">💐</div>
+            <p>Fotoğraf 4</p>
+            <p style="font-size:9px;opacity:0.6;margin-top:4px">photo4.jpeg</p>
+          </div>
+          <div class="photo-frame-deco"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="floral-divider" data-aos="fade-up">🌿 🌸 🌷 🌸 🌿</div>
+
+  <!-- ─── DETAILS ─── -->
+  <section class="details-section">
+    <p class="section-tag" data-aos="fade-up">bilgiler</p>
+    <h2 class="section-title" data-aos="fade-up">Etkinlik Detayları</h2>
+    <div class="ornament" data-aos="fade-up">
+      <div class="ornament-line rev"></div>
+      <div class="ornament-dot"></div>
+      <div class="ornament-dot" style="opacity:0.3"></div>
+      <div class="ornament-dot"></div>
+      <div class="ornament-line"></div>
+    </div>
+    <div class="detail-cards">
+      <div class="detail-card" data-aos="fade-up" data-aos-delay="0">
+        <span class="detail-icon">📅</span>
+        <h3>Tarih</h3>
+        <p>18 Ağustos 2025<br>Pazartesi</p>
+      </div>
+      <div class="detail-card" data-aos="fade-up" data-aos-delay="80">
+        <span class="detail-icon">🕗</span>
+        <h3>Saat</h3>
+        <p>Akşam 20:00<br>Kapılar 19:30'da açılır</p>
+      </div>
+      <div class="detail-card" data-aos="fade-up" data-aos-delay="160">
+        <span class="detail-icon">📍</span>
+        <h3>Yer</h3>
+        <p>Mekan bilgisi<br>yakında paylaşılacak</p>
+      </div>
+      <div class="detail-card" data-aos="fade-up" data-aos-delay="240">
+        <span class="detail-icon">👗</span>
+        <h3>Kıyafet</h3>
+        <p>Şık & Resmi<br>Bahar renkleri ✨</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── VENUE ─── -->
+  <div class="venue-section">
+    <p class="section-tag" data-aos="fade-up">nerede</p>
+    <h2 class="section-title" data-aos="fade-up">Düğün Yeri</h2>
+    <div class="ornament" data-aos="fade-up">
+      <div class="ornament-line rev"></div>
+      <div class="ornament-dot"></div>
+      <div class="ornament-dot" style="opacity:0.3"></div>
+      <div class="ornament-dot"></div>
+      <div class="ornament-line"></div>
+    </div>
+    <div class="venue-map-placeholder" data-aos="zoom-in">
+      <div class="map-icon">📍</div>
+      <p class="venue-name">Mekan Yakında Açıklanacak</p>
+      <p class="venue-address">Adres bilgisi daha sonra paylaşılacaktır</p>
+      <div class="venue-badge">🌸 Sizi Bekliyoruz 🌸</div>
+    </div>
+  </div>
+
+  <!-- ─── RSVP ─── -->
+  <section class="rsvp-section">
+    <p class="section-tag" data-aos="fade-up">katılım</p>
+    <h2 class="section-title" data-aos="fade-up">Bize Katılın</h2>
+    <div class="ornament" data-aos="fade-up">
+      <div class="ornament-line rev"></div>
+      <div class="ornament-dot"></div>
+      <div class="ornament-dot" style="opacity:0.3"></div>
+      <div class="ornament-dot"></div>
+      <div class="ornament-line"></div>
+    </div>
+    <div class="rsvp-card" data-aos="fade-up" data-aos-delay="100">
+      <p>
+        Bu özel günümüzü sizinle kutlamaktan büyük mutluluk duyacağız.
+        Varlığınız bizim için paha biçilmez...
+      </p>
+      <a href="tel:+905001234567" class="rsvp-btn">📞 Tebrik & İletişim</a>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-flowers" data-aos="fade-up">🌸 🌷 🌼 💐 🌼 🌷 🌸</div>
+    <div class="footer-names" data-aos="fade-up">Yasemin & Özcan</div>
+    <p class="footer-tagline" data-aos="fade-up">18 Ağustos 2025 · Sonsuz Sevgi</p>
+    <p class="footer-copy" data-aos="fade-up">🕊️ birlikte her şey daha güzel 🕊️</p>
+  </footer>
+
+</div><!-- /#main-content -->
+
+<!-- Scripts -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<script>
+// ─── ENVELOPE OPEN ───
+let opened = false;
+function openEnvelope() {
+  if (opened) return;
+  opened = true;
+
+  const flap = document.getElementById('env-flap-top');
+  const seal = document.getElementById('env-seal');
+  const card = document.getElementById('env-card');
+  const overlay = document.getElementById('envelope-overlay');
+  const main = document.getElementById('main-content');
+
+  // Seal disappears
+  seal.classList.add('hidden');
+
+  // Flap opens
+  setTimeout(() => {
+    flap.classList.add('open');
+  }, 300);
+
+  // Card rises
+  setTimeout(() => {
+    card.classList.add('rise');
+  }, 900);
+
+  // Overlay fades out
+  setTimeout(() => {
+    gsap.to(overlay, { opacity: 0, duration: 0.8, ease: 'power2.inOut', onComplete: () => {
+      overlay.style.display = 'none';
+    }});
+    main.classList.add('visible');
+    AOS.init({ duration: 900, once: true, easing: 'ease-out-cubic', offset: 60 });
+    startCountdown();
+    createParticles();
+    createBirds();
+  }, 1700);
+}
+
+// ─── COUNTDOWN ───
+function startCountdown() {
+  const target = new Date('2025-08-18T20:00:00');
+  function update() {
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('days').textContent = '🎊';
+      document.getElementById('hours').textContent = '🎊';
+      document.getElementById('minutes').textContent = '🎊';
+      document.getElementById('seconds').textContent = '🎊';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('days').textContent = String(d).padStart(2,'0');
+    document.getElementById('hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('minutes').textContent = String(m).padStart(2,'0');
+    document.getElementById('seconds').textContent = String(s).padStart(2,'0');
+  }
+  update();
+  setInterval(update, 1000);
+}
+
+// ─── PARTICLES ───
+function createParticles() {
+  const container = document.getElementById('particles');
+  const emojis = ['🌸','🌷','🌼','🌺','💐','🌿','✿','❀','🌹','🍃'];
+  for (let i = 0; i < 18; i++) {
+    const el = document.createElement('div');
+    el.className = 'particle';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.fontSize = (14 + Math.random() * 16) + 'px';
+    el.style.animationDuration = (8 + Math.random() * 12) + 's';
+    el.style.animationDelay = (Math.random() * 10) + 's';
+    el.style.opacity = 0;
+    container.appendChild(el);
+  }
+}
+
+// ─── BIRDS ───
+function createBirds() {
+  const container = document.getElementById('birds');
+  const birdEmojis = ['🕊️','🕊️','🦋'];
+  const rows = [15, 35, 60];
+  rows.forEach((top, i) => {
+    const bird = document.createElement('div');
+    bird.className = 'bird';
+    bird.textContent = birdEmojis[i % birdEmojis.length];
+    bird.style.top = top + 'vh';
+    bird.style.fontSize = (18 + Math.random() * 10) + 'px';
+    bird.style.animationDuration = (10 + Math.random() * 8) + 's';
+    bird.style.animationDelay = (i * 3 + Math.random() * 4) + 's';
+    container.appendChild(bird);
+  });
+}
+
+// ─── SMOOTH SCROLL (native) ───
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+
 </body>
 </html>
+HTMLEOF
+echo "Done"
