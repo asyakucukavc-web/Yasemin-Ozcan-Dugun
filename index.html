@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yasemin & Özcan | Düğün Davetiyesi</title>
 
-<!-- Şık Yazı Tipleri (GitHub Uyumlu) -->
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght=0,400;0,600;1,400&family=Great+Vibes&family=Jost:wght=300;400;500;600&display=swap');
 
   :root {
     --blush: #e2a8b5;
@@ -42,6 +41,53 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  /* ──────────────────────────────────────────────────
+     ────────────────────────────────────────────────── */
+  #leaf-container {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; /* Üzerine tıklanmasını engeller */
+    z-index: 5; /* Zarfın altında, içeriğin üstünde kalır (isteğe bağlı) */
+    overflow: hidden;
+    display: none; /* Başlangıçta gizli, zarf açılınca açılacak */
+  }
+
+  #leaf-container.active {
+    display: block;
+  }
+
+  .leaf {
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    /* Çiçek emojisi boyutu */
+    font-size: clamp(14px, 3vw, 24px); 
+    opacity: 0.8;
+    user-select: none;
+    /* Düşme ve dönme animasyonları */
+    animation: fall linear infinite, sway ease-in-out infinite, rotate linear infinite;
+  }
+
+  /* Aşağı Düşme Animasyonu */
+  @keyframes fall {
+    0% { transform: translateY(-10vh); }
+    100% { transform: translateY(110vh); }
+  }
+
+  /* Sağa Sola Sallanma Animasyonu */
+  @keyframes sway {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(50px); }
+  }
+
+  /* Dönme Animasyonu */
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  /* ──────────────────────────────────────────────────
+     ────────────────────────────────────────────────── */
 
   /* ─── ENVELOPE (ZARF) OVERLAY ─── */
   #envelope-overlay {
@@ -527,7 +573,6 @@
 </head>
 <body>
 
-<!-- ═══ ENVELOPE (ZARF) OVERLAY ═══ -->
 <div id="envelope-overlay" onclick="openEnvelope()">
   <div class="env-scene">
     <div class="env-body">
@@ -548,16 +593,18 @@
   <div class="env-hint">✦ açmak için dokunun ✦</div>
 </div>
 
-<!-- ═══ MAIN CONTENT ═══ -->
+Animasyonun gerçekleşeceği ana kapsayıcı.
+══════════════════════════════════════════════════ -->
+<div id="leaf-container"></div>
+────────────────────────────────────────────────── -->
+
 <div id="main-content">
 
-  <!-- ─── HERO BÖLÜMÜ (ŞİİR EN BAŞA ALINDI) ─── -->
   <div class="hero">
     <div class="hero-bg-pattern"></div>
 
     <p class="hero-label">En mutlu günümüze davetlisiniz</p>
     
-    <!-- Giriş Kelamı -->
     <p class="hero-poem-text">
       Sevinçle, umutla ve sevgiyle dolu bu yeni yolculukta bize eşlik edin.
     </p>
@@ -571,7 +618,7 @@
     </div>
 
     <div class="hero-flower-row">
-      🌸 🌷 🌼 🌸 🌷
+      🌸 🌷 Daisy 🌸 🌷
     </div>
 
     <div class="hero-date-box">
@@ -582,7 +629,6 @@
     <div class="hero-divider"></div>
   </div>
 
-  <!-- ─── GERİ SAYIM ─── -->
   <div class="countdown-section src-animation fade-in-up">
     <p class="section-tag">düğüne kalan süre</p>
     <h2 class="section-title">Geri Sayım</h2>
@@ -608,7 +654,6 @@
 
   <div class="floral-divider">🌸 🌿 🌷 🌿 🌸</div>
 
-  <!-- ─── ETKİNLİK DETAYLARI (Net & Sadeleştirilmiş 2 Kart) ─── -->
   <section class="details-section src-animation fade-in-up">
     <p class="section-tag">bilgiler</p>
     <h2 class="section-title">Etkinlik Detayları</h2>
@@ -627,7 +672,6 @@
     </div>
   </section>
 
-  <!-- ─── ADRES & HARİTA BÖLÜMÜ (Google Maps Yönlendirmeli) ─── -->
   <div class="venue-section src-animation fade-in-up">
     <p class="section-tag">nerede</p>
     <h2 class="section-title">Düğün Yeri</h2>
@@ -638,14 +682,12 @@
         Çekmece Kavşağı Çevreyolu Üzeri<br>
         Lukoil Petrol Ofisi Karşısı, Antakya / Hatay
       </p>
-      <!-- Haritaya Git Butonu -->
       <a href="https://maps.google.com/?q=Gloria+Düğün+Salonu+Çekmece+Kavşağı+Antakya+Hatay" target="_blank" class="maps-btn">
         🗺️ Yol Tarifi ve Harita
       </a>
     </div>
   </div>
 
-  <!-- ─── FOOTER ─── -->
   <footer>
     <div class="footer-names">Yasemin & Özcan</div>
   </footer>
@@ -664,6 +706,7 @@ function openEnvelope() {
   const card = document.getElementById('env-card');
   const overlay = document.getElementById('envelope-overlay');
   const main = document.getElementById('main-content');
+  const leafContainer = document.getElementById('leaf-container'); // 🌸
 
   seal.classList.add('hidden');
 
@@ -678,6 +721,8 @@ function openEnvelope() {
   setTimeout(() => {
     overlay.style.opacity = '0';
     main.classList.add('visible');
+    leafContainer.classList.add('active'); // Zarf açılınca animasyonu başlat 🌸
+    startLeafAnimation(); // JavaScript fonksiyonunu çağır 🌸
     startCountdown();
     initScrollAnimations();
     
@@ -727,6 +772,45 @@ function initScrollAnimations() {
 
   animatedElements.forEach(el => observer.observe(el));
 }
+
+// ──────────────────────────────────────────────────
+// // ──────────────────────────────────────────────────
+function startLeafAnimation() {
+  const container = document.getElementById('leaf-container');
+  // Kullanılacak çiçek emojileri listesi
+  const leaves = ['🌸', '🌷', 'Daisy', '🌿', '🍂'];
+  // Toplam kaç adet çiçek parçacığı olsun?
+  const leafCount = 50; 
+
+  for (let i = 0; i < leafCount; i++) {
+    const leaf = document.createElement('span');
+    leaf.className = 'leaf';
+    // Rastgele bir emoji seç
+    leaf.textContent = leaves[Math.floor(Math.random() * leaves.length)];
+
+    // Rastgele başlangıç pozisyonları (yatayda)
+    leaf.style.left = Math.random() * 100 + 'vw';
+    
+    // Rastgele animasyon süreleri ve gecikmeleri (farklı hızlar için)
+    const fallDuration = Math.random() * 10 + 10 + 's'; // 10-20 saniye arası düşme
+    const swayDuration = Math.random() * 4 + 3 + 's';   // 3-7 saniye arası sallanma
+    const rotateDuration = Math.random() * 5 + 5 + 's'; // 5-10 saniye arası dönme
+    const delay = Math.random() * -20 + 's';             // Başlangıçta hepsi aynı anda düşmesin
+
+    // Animasyon özelliklerini CSS olarak uygula
+    leaf.style.animationName = 'fall, sway, rotate';
+    leaf.style.animationDuration = `${fallDuration}, ${swayDuration}, ${rotateDuration}`;
+    leaf.style.animationDelay = `${delay}, 0s, 0s`; // Gecikme sadece düşmeye uygulanır
+
+    // Boyutu hafifçe rastgeleleştir (daha doğal görünüm)
+    const size = Math.random() * 0.5 + 0.8; // 0.8 ile 1.3 katı arası
+    leaf.style.transform += ` scale(${size})`;
+
+    container.appendChild(leaf);
+  }
+}
+// ──────────────────────────────────────────────────
+// // ──────────────────────────────────────────────────
 </script>
 
 </body>
