@@ -8,27 +8,32 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap');
 
-  :root {
-    --blush: #e2a8b5;
-    --blush-light: #fbe0e6;
-    --sky: #9cc2d8;
-    --sky-light: #d0e7f4;
-    --cream: #faf5ed;
-    --dusty-rose: #bd687b;
-    --gold: #b39255;
-    --text-dark: #211118;
-    --text-mid: #3d2230;
-    --text-light: #5c3b4c;
+:root {
+    --bg-main: #faf5ed;       /* Ana krem arka plan (Sabit) */
+    --accent-pink: #e2a8b5;    /* Vurgu pembe */
+    --accent-rose: #bd687b;    /* Koyu vurgu gül (Başlıklar) */
+    --gold-vurgu: #b39255;    /* Altın vurgu */
+    --text-dark: #211118;     /* Ana metin */
+    --text-mid: #3d2230;      /* Orta metin */
+    --border-light: rgba(187,169,211,0.25); /* Hafif ayırıcılar */
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
 
-  body {
-    background: var(--cream);
+body {
+    background: var(--bg-main); /* Tüm site krem */
     font-family: 'Jost', sans-serif;
     color: var(--text-dark);
     overflow-x: hidden;
+  }
+
+  #main-content {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    position: relative;
+    z-index: 10;
+    background: var(--bg-main); /* Zarf açılınca zemin krem kalır */
   }
 
   /* Canlılık katan giriş animasyon efekti */
@@ -264,16 +269,14 @@
     position: relative;
     padding: 60px 20px;
     overflow: hidden;
-    background: linear-gradient(170deg, #fadce2 0%, #fbf0f5 30%, #daedf8 70%, #faf5ed 100%);
+    background: var(--bg-main); /* Renkli geçiş kaldırıldı, sadece krem */
   }
 
   .hero-bg-pattern {
     position: absolute;
     inset: 0;
     background-image:
-      radial-gradient(circle at 20% 20%, rgba(226,168,181,0.4) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(156,194,216,0.4) 0%, transparent 50%),
-      radial-gradient(circle at 50% 50%, rgba(187,169,211,0.25) 0%, transparent 60%);
+      radial-gradient(circle at 50% 50%, var(--border-light) 0%, transparent 60%);
     pointer-events: none;
   }
 
@@ -362,9 +365,9 @@
   }
 
   /* ─── GERİ SAYIM (COUNTDOWN) ─── */
-  .countdown-section {
-    background: linear-gradient(135deg, #fadce2 0%, #daedf8 100%);
-    padding: 60px 20px;
+.countdown-section {
+    background: var(--bg-main); /* Renk kaldırıldı, krem zemin */
+    padding: 80px 20px; /* Biraz daha boşluk */
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -378,14 +381,13 @@
     margin-top: 32px;
   }
 
-  .count-item {
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(10px);
+.count-item {
+    background: white; /* Kartlar saf beyaz */
     border-radius: 16px;
     padding: 24px 32px;
-    min-width: 100px;
-    border: 1px solid rgba(226,168,181,0.5);
-    box-shadow: 0 8px 32px rgba(180,90,110,0.12);
+    min-width: 110px;
+    border: 1px solid rgba(226,168,181,0.3); /* Çok hafif sınır */
+    box-shadow: 0 5px 15px rgba(180,90,110,0.05); /* Çok hafif gölge */
   }
 
   .count-num {
@@ -458,20 +460,20 @@
   }
 
   /* ─── MEKAN VE MAPS BÖLÜMÜ ─── */
-  .venue-section {
-    padding: 90px 20px;
-    background: linear-gradient(135deg, #daedf8 0%, #fadce2 100%);
+ .venue-section {
+    padding: 100px 20px; /* Boşluk artırıldı */
+    background: var(--bg-main); /* Mavi renk kaldırıldı, krem zemin */
     text-align: center;
   }
 
-  .venue-map-placeholder {
+.venue-map-placeholder {
     max-width: 580px;
     margin: 0 auto;
-    background: rgba(255,255,255,0.94);
-    border: 1px solid rgba(156,194,216,0.6);
+    background: white; /* Harita kartı beyaz */
+    border: 1px solid rgba(187,169,211,0.2); /* Çok hafif sınır */
     border-radius: 24px;
     padding: 50px 30px;
-    box-shadow: 0 12px 40px rgba(80,140,180,0.18);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03); /* Çok hafif, profesyonel gölge */
   }
 
   .venue-name {
@@ -515,10 +517,11 @@
     box-shadow: 0 12px 32px rgba(160,70,95,0.45);
   }
 
-  footer {
-    padding: 80px 20px;
+footer {
+    padding: 100px 20px; /* Boşluk artırıldı */
     text-align: center;
-    background: linear-gradient(to bottom, #faf5ed, #fadce2);
+    background: var(--bg-main); /* Sade krem */
+    border-top: 1px solid var(--border-light); /* Üste hafif bir çizgi */
   }
 
   .footer-names {
