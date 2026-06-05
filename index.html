@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yasemin & Özcan | Düğün Davetiyesi</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<!-- Şık Yazı Tipleri (GitHub Uyumlu) -->
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap');
+
   :root {
     --blush: #e2a8b5;
     --blush-light: #fbe0e6;
@@ -29,6 +30,17 @@
     font-family: 'Jost', sans-serif;
     color: var(--text-dark);
     overflow-x: hidden;
+  }
+
+  /* Canlılık katan giriş animasyon efekti */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+  }
+  .fade-in-up.appear {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   /* ─── ENVELOPE (ZARF) OVERLAY ─── */
@@ -121,7 +133,7 @@
     background: radial-gradient(circle at 35% 35%, #de829f, #a24b69);
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 4px 20px rgba(130,50,75,0.5), inset 0 1px 3px rgba(255,255,255,0.4);
-    font-family: 'Great Vibes', cursive;
+    font-family: 'Great Vibes', cursive, 'Brush Script MT', sans-serif !important;
     color: white;
     font-size: 26px;
     text-shadow: 0 1px 4px rgba(0,0,0,0.2);
@@ -152,7 +164,7 @@
   }
 
   .env-card-inner p {
-    font-family: 'Great Vibes', cursive;
+    font-family: 'Great Vibes', cursive, 'Brush Script MT', sans-serif !important;
     font-size: clamp(22px, 5vw, 32px);
     color: var(--dusty-rose);
     line-height: 1.3;
@@ -227,51 +239,65 @@
 
   .hero-divider {
     width: 1px;
-    height: 60px;
+    height: 45px;
     background: linear-gradient(to bottom, transparent, var(--dusty-rose), transparent);
-    margin: 20px auto;
+    margin: 15px auto;
   }
 
   .hero-label {
     font-family: 'Jost', sans-serif;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 15px;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--text-dark);
-    margin-bottom: 24px;
+    margin-bottom: 15px;
     text-align: center;
   }
 
+  /* En Başa Alınan Giriş Şiiri/Sözü */
+  .hero-poem-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(18px, 3.8vw, 23px);
+    color: var(--text-light);
+    line-height: 1.8;
+    font-weight: 600;
+    text-align: center;
+    max-width: 550px;
+    margin: 10px auto 25px;
+  }
+
   .hero-names {
-    font-family: 'Great Vibes', cursive;
-    font-size: clamp(65px, 15vw, 115px);
+    font-family: 'Great Vibes', cursive, 'Brush Script MT', sans-serif !important;
+    font-size: clamp(65px, 14vw, 110px);
     color: var(--dusty-rose);
     line-height: 1;
     text-align: center;
     text-shadow: 0 4px 20px rgba(180,80,110,0.15);
     position: relative;
     font-weight: bold;
+    margin-top: 10px;
   }
 
   .hero-amp {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(32px, 8vw, 58px);
+    font-size: clamp(32px, 8vw, 54px);
     font-style: italic;
     color: var(--gold);
     display: block;
     line-height: 1.2;
-    margin: 4px 0;
+    margin: 2px 0;
   }
 
   .hero-date-box {
-    margin: 32px 0;
+    margin: 25px 0;
     text-align: center;
   }
 
   .hero-date {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(22px, 5vw, 32px);
+    font-size: clamp(24px, 5.5vw, 34px);
     font-weight: bold;
     letter-spacing: 6px;
     color: var(--text-dark);
@@ -281,7 +307,7 @@
   .hero-time {
     font-family: 'Jost', sans-serif;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 17px;
     letter-spacing: 4px;
     color: var(--text-mid);
     margin-top: 8px;
@@ -291,7 +317,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    margin: 16px 0;
+    margin: 12px 0;
     font-size: 24px;
   }
 
@@ -313,13 +339,13 @@
   }
 
   .count-item {
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.92);
     backdrop-filter: blur(10px);
     border-radius: 16px;
     padding: 24px 32px;
     min-width: 100px;
     border: 1px solid rgba(226,168,181,0.5);
-    box-shadow: 0 8px 32px rgba(180,90,110,0.1);
+    box-shadow: 0 8px 32px rgba(180,90,110,0.12);
   }
 
   .count-num {
@@ -342,79 +368,58 @@
     display: block;
   }
 
-  /* ─── ŞİİR / SÖZ BÖLÜMÜ ─── */
-  .poem-section {
-    text-align: center;
-    padding: 80px 20px;
-    max-width: 860px;
-    margin: 0 auto;
-  }
-
-  .poem-card {
-    background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(250,230,237,0.95));
-    border: 1px solid rgba(226,168,181,0.5);
-    border-radius: 24px;
-    padding: 40px;
-    max-width: 600px;
-    margin: 0 auto;
-    box-shadow: 0 20px 80px rgba(180,90,110,0.1);
-  }
-
-  .poem-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: clamp(18px, 4vw, 24px);
-    color: var(--text-dark);
-    line-height: 2;
-    font-weight: 600;
-  }
-
-  /* ─── DETAY KARTLARI (Kıyafet Bölümü Kaldırıldı ve 3'lüye göre dengelendi) ─── */
+  /* ─── ETKİNLİK DETAYLARI (Simetrik 2'li yapı) ─── */
   .details-section {
-    padding: 60px 20px;
+    padding: 80px 20px;
     max-width: 860px;
     margin: 0 auto;
   }
 
   .detail-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    max-width: 800px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 650px;
     margin: 0 auto;
+  }
+
+  @media (max-width: 520px) {
+    .detail-cards {
+      grid-template-columns: 1fr;
+    }
   }
 
   .detail-card {
     background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(250,230,237,0.95));
     border: 1px solid rgba(226,168,181,0.5);
     border-radius: 20px;
-    padding: 36px 24px;
+    padding: 40px 24px;
     text-align: center;
-    box-shadow: 0 8px 32px rgba(180,90,110,0.08);
+    box-shadow: 0 8px 32px rgba(180,90,110,0.1);
   }
 
-  .detail-icon { font-size: 38px; margin-bottom: 16px; display: block; }
+  .detail-icon { font-size: 40px; margin-bottom: 16px; display: block; }
 
   .detail-card h3 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: bold;
     color: var(--dusty-rose);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     letter-spacing: 1px;
   }
 
   .detail-card p {
     font-family: 'Jost', sans-serif;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 17px;
     color: var(--text-dark);
     line-height: 1.6;
   }
 
-  /* ─── MEKAN (VENUE) BÖLÜMÜ ─── */
+  /* ─── MEKAN VE MAPS BÖLÜMÜ ─── */
   .venue-section {
-    padding: 80px 20px;
+    padding: 90px 20px;
     background: linear-gradient(135deg, #daedf8 0%, #fadce2 100%);
     text-align: center;
   }
@@ -422,11 +427,11 @@
   .venue-map-placeholder {
     max-width: 580px;
     margin: 0 auto;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.94);
     border: 1px solid rgba(156,194,216,0.6);
-    border-radius: 20px;
-    padding: 45px 30px;
-    box-shadow: 0 12px 40px rgba(80,140,180,0.15);
+    border-radius: 24px;
+    padding: 50px 30px;
+    box-shadow: 0 12px 40px rgba(80,140,180,0.18);
   }
 
   .venue-name {
@@ -434,83 +439,50 @@
     font-size: clamp(26px, 5.5vw, 36px);
     font-style: italic;
     color: var(--text-dark);
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     font-weight: bold;
   }
 
   .venue-address {
     font-family: 'Jost', sans-serif;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 17px;
     color: var(--text-mid);
-    line-height: 1.6;
-    letter-spacing: 0.5px;
+    line-height: 1.7;
+    margin-bottom: 30px;
   }
 
-  .venue-badge {
-    display: inline-block;
-    margin-top: 24px;
-    padding: 12px 32px;
-    background: linear-gradient(135deg, var(--sky), var(--blush));
-    border-radius: 50px;
-    font-family: 'Jost', sans-serif;
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: white;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.15);
-  }
-
-  /* ─── RSVP & FOOTER ─── */
-  .rsvp-section {
-    padding: 80px 20px;
-    text-align: center;
-  }
-
-  .rsvp-card {
-    max-width: 480px;
-    margin: 0 auto;
-    background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(250,230,237,0.95));
-    border: 1px solid rgba(226,168,181,0.5);
-    border-radius: 28px;
-    padding: 40px;
-    box-shadow: 0 20px 80px rgba(180,90,110,0.15);
-  }
-
-  .rsvp-card p {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(18px, 3.2vw, 22px);
-    color: var(--text-dark);
-    line-height: 1.8;
-    margin-bottom: 28px;
-    font-style: italic;
-    font-weight: 600;
-  }
-
-  .rsvp-btn {
-    display: inline-block;
-    padding: 16px 40px;
+  .maps-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
     background: linear-gradient(135deg, #bd687b, #a24b69);
     color: white;
     text-decoration: none;
     border-radius: 50px;
     font-family: 'Jost', sans-serif;
     font-weight: 600;
-    font-size: 14px;
-    letter-spacing: 2px;
+    font-size: 15px;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    box-shadow: 0 8px 32px rgba(160,70,95,0.3);
+    box-shadow: 0 8px 24px rgba(160,70,95,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .maps-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(160,70,95,0.45);
   }
 
   footer {
-    padding: 60px 20px 40px;
+    padding: 80px 20px;
     text-align: center;
     background: linear-gradient(to bottom, #faf5ed, #fadce2);
   }
 
   .footer-names {
-    font-family: 'Great Vibes', cursive;
+    font-family: 'Great Vibes', cursive, 'Brush Script MT', sans-serif !important;
     font-size: clamp(42px, 10vw, 70px);
     color: var(--dusty-rose);
     margin-bottom: 16px;
@@ -520,7 +492,7 @@
   .footer-tagline {
     font-family: 'Jost', sans-serif;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--text-mid);
@@ -538,7 +510,7 @@
   }
 
   .section-title {
-    font-family: 'Great Vibes', cursive;
+    font-family: 'Great Vibes', cursive, 'Brush Script MT', sans-serif !important;
     font-size: clamp(38px, 9vw, 65px);
     color: var(--dusty-rose);
     text-align: center;
@@ -549,12 +521,13 @@
   .floral-divider {
     text-align: center;
     font-size: 28px;
-    padding: 24px 0;
+    padding: 30px 0;
   }
 </style>
 </head>
 <body>
 
+<!-- ═══ ENVELOPE (ZARF) OVERLAY ═══ -->
 <div id="envelope-overlay" onclick="openEnvelope()">
   <div class="env-scene">
     <div class="env-body">
@@ -575,12 +548,21 @@
   <div class="env-hint">✦ açmak için dokunun ✦</div>
 </div>
 
+<!-- ═══ MAIN CONTENT ═══ -->
 <div id="main-content">
 
+  <!-- ─── HERO BÖLÜMÜ (ŞİİR EN BAŞA ALINDI) ─── -->
   <div class="hero">
     <div class="hero-bg-pattern"></div>
 
     <p class="hero-label">En mutlu günümüze davetlisiniz</p>
+    
+    <!-- Giriş Kelamı -->
+    <p class="hero-poem-text">
+      İki kalbin bir araya gelişi, baharın çiçekleri gibi açsın;<br>
+      sevinçle, umutla ve sevgiyle dolu bu yeni yolculukta bize eşlik edin.
+    </p>
+
     <div class="hero-divider"></div>
 
     <div class="hero-names">
@@ -601,7 +583,8 @@
     <div class="hero-divider"></div>
   </div>
 
-  <div class="countdown-section">
+  <!-- ─── GERİ SAYIM ─── -->
+  <div class="countdown-section src-animation fade-in-up">
     <p class="section-tag">düğüne kalan süre</p>
     <h2 class="section-title">Geri Sayım</h2>
     <div class="countdown-grid" id="countdown">
@@ -624,19 +607,10 @@
     </div>
   </div>
 
-  <section class="poem-section">
-    <h2 class="section-title">Düğünümüze Davetlisiniz</h2>
-    <div class="poem-card">
-      <p class="poem-text">
-        Sevinçle, umutla ve sevgiyle dolu<br>
-        bu yeni yolculukta bize eşlik edin.
-      </p>
-    </div>
-  </section>
-
   <div class="floral-divider">🌸 🌿 🌷 🌿 🌸</div>
 
-  <section class="details-section">
+  <!-- ─── ETKİNLİK DETAYLARI (Net & Sadeleştirilmiş 2 Kart) ─── -->
+  <section class="details-section src-animation fade-in-up">
     <p class="section-tag">bilgiler</p>
     <h2 class="section-title">Etkinlik Detayları</h2>
     
@@ -651,37 +625,28 @@
         <h3>Saat</h3>
         <p>Akşam 20:00<br>Kapılar 19:30'da açılır</p>
       </div>
-      <div class="detail-card">
-        <span class="detail-icon">📍</span>
-        <h3>Yer</h3>
-        <p>Gloria Düğün Salonu<br>Antakya / Hatay</p>
-      </div>
     </div>
   </section>
 
-  <div class="venue-section">
+  <!-- ─── ADRES & HARİTA BÖLÜMÜ (Google Maps Yönlendirmeli) ─── -->
+  <div class="venue-section src-animation fade-in-up">
     <p class="section-tag">nerede</p>
     <h2 class="section-title">Düğün Yeri</h2>
     
     <div class="venue-map-placeholder">
       <p class="venue-name">Gloria Düğün Salonu</p>
-      <p class="venue-address">Çekmece Kavşağı Çevreyolu Üzeri Lukoil Petrol Ofisi Karşısı, Antakya, Hatay 31160</p>
-      <div class="venue-badge">🌸 Sizi Bekliyoruz 🌸</div>
+      <p class="venue-address">
+        Çekmece Kavşağı Çevreyolu Üzeri<br>
+        Lukoil Petrol Ofisi Karşısı, Antakya / Hatay
+      </p>
+      <!-- Haritaya Git Butonu -->
+      <a href="https://maps.google.com/?q=Gloria+Düğün+Salonu+Çekmece+Kavşağı+Antakya+Hatay" target="_blank" class="maps-btn">
+        🗺️ Yol Tarifi ve Harita
+      </a>
     </div>
   </div>
 
-  <section class="rsvp-section">
-    <p class="section-tag">katılım</p>
-    <h2 class="section-title">Bize Katılın</h2>
-    
-    <div class="rsvp-card">
-      <p>
-        Bu özel günümüzü sizinle kutlamaktan büyük mutluluk duyacağız.
-      </p>
-      <a href="tel:+905001234567" class="rsvp-btn">📞 Tebrik & İletişim</a>
-    </div>
-  </section>
-
+  <!-- ─── FOOTER ─── -->
   <footer>
     <div class="footer-names">Yasemin & Özcan</div>
     <p class="footer-tagline">18 Ağustos 2026 · Sonsuz Sevgi</p>
@@ -702,26 +667,22 @@ function openEnvelope() {
   const overlay = document.getElementById('envelope-overlay');
   const main = document.getElementById('main-content');
 
-  // Mühür küçülerek kaybolur
   seal.classList.add('hidden');
 
-  // Üst kapak yukarı doğru açılır
   setTimeout(() => {
     flap.classList.add('open');
   }, 300);
 
-  // Küçük kart zarfın içinden yukarı fırlar
   setTimeout(() => {
     card.classList.add('rise');
   }, 800);
 
-  // Zarf ekranı yumuşakça silinir ve ana davetiye görünür
   setTimeout(() => {
     overlay.style.opacity = '0';
     main.classList.add('visible');
     startCountdown();
+    initScrollAnimations();
     
-    // Geçiş bittikten sonra arkadaki zarfı tamamen temizle
     setTimeout(() => {
       overlay.style.display = 'none';
     }, 800);
@@ -752,6 +713,21 @@ function startCountdown() {
   }
   update();
   setInterval(update, 1000);
+}
+
+// ─── SAF JAVASCRIPT GİRİŞ ANIMASYONU ───
+function initScrollAnimations() {
+  const animatedElements = document.querySelectorAll('.src-animation');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('appear');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  animatedElements.forEach(el => observer.observe(el));
 }
 </script>
 
