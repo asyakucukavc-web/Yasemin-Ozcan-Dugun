@@ -1,819 +1,284 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yasemin & Özcan | Düğün Davetiyesi</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Yasemin & Özcan | Invitation</title>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght=0,400;0,600;1,400&family=Great+Vibes&family=Jost:wght=300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap');
 
-  :root {
-    --blush: #e2a8b5;
-    --dusty-rose: #bd687b;
-    --gold: #b39255;
-    --cream: #faf5ed; /* Ana Arka Plan Rengi */
-    --text-dark: #211118;
-    --text-mid: #3d2230;
-    --text-light: #5c3b4c;
-    --border-light: rgba(187,169,211,0.2);
-  }
+:root{
+  --rose:#bd687b;
+  --bg1:#fff3f6;
+  --bg2:#f7f0ea;
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+/* GLOBAL */
+*{margin:0;padding:0;box-sizing:border-box;}
 
-  body {
-    background: var(--cream); /* Tüm site sabit krem rengi */
-    font-family: 'Jost', sans-serif;
-    color: var(--text-dark);
-    overflow-x: hidden;
-  }
+body{
+  font-family:'Jost',sans-serif;
+  background: radial-gradient(circle at top,#fff3f6,#f7f0ea,#fdfaf6);
+  overflow-x:hidden;
+  perspective:1200px;
+}
 
-  /* Canlılık katan giriş animasyon efekti */
-  .fade-in-up {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s ease-out, transform 1s ease-out;
-  }
-  .fade-in-up.appear {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* glow background */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,182,193,0.25), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255,220,180,0.25), transparent 40%);
+  z-index:0;
+  pointer-events:none;
+}
 
-  /* ──────────────────────────────────────────────────
-     ────────────────────────────────────────────────── */
-  #leaf-container {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 1; /* Arka planda kalması için */
-    overflow: hidden;
-    display: none;
-  }
+/* FLOWERS CANVAS */
+#flower-canvas{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+}
 
-  #leaf-container.active {
-    display: block;
-  }
+/* ENVELOPE */
+#envelope{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#f5d4dd,#d8ebf7,#eae2cd);
+  z-index:9999;
+  cursor:pointer;
+  transition:opacity 1s ease;
+}
 
-  .leaf {
-    position: absolute;
-    display: block;
-    user-select: none;
-    font-size: 24px;
-    opacity: 0.8;
-    /* JavaScript tarafından atanan değişkenleri kullanır */
-    top: var(--start-y);
-    left: var(--start-x);
-    animation-delay: var(--delay);
-    
-    /* Üç animasyonu birleştiriyoruz: düşme, sallanma, dönme */
-    animation-name: fall-sway-rotate;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-  }
+.env-card{
+  padding:30px 40px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.7);
+  backdrop-filter:blur(10px);
+  text-align:center;
+  box-shadow:0 30px 80px rgba(0,0,0,0.15);
+}
 
-  /* Tek bir akıcı animasyon anahtarı */
-  @keyframes fall-sway-rotate {
-    0% {
-      transform: translateY(0) translateX(0) rotate(0deg);
-      opacity: 0.8;
-    }
-    10% {
-      opacity: 1; /* Ortaya çıkış */
-    }
-    100% {
-      /* Düşme mesafesi JavaScript ile atanır */
-      transform: translateY(var(--fall-distance)) translateX(var(--sway-distance)) rotate(var(--rotate-speed));
-      opacity: 0; /* Kayboluş */
-    }
-  }
-  /* ──────────────────────────────────────────────────
-     ────────────────────────────────────────────────── */
+.env-card h1{
+  font-family:'Great Vibes',cursive;
+  color:var(--rose);
+}
 
-  /* ─── ENVELOPE (ZARF) OVERLAY ─── */
-  #envelope-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #f5d4dd 0%, #d8ebf7 50%, #eae2cd 100%);
-    cursor: pointer;
-    transition: opacity 0.8s ease-in-out;
-  }
+/* MAIN */
+#main{
+  opacity:0;
+  transition:1.2s ease;
+  position:relative;
+  z-index:5;
+}
 
-  .env-scene {
-    position: relative;
-    width: min(420px, 90vw);
-    height: min(300px, 65vw);
-    filter: drop-shadow(0 20px 60px rgba(150,90,110,0.4));
-  }
+#main.show{opacity:1;}
 
-  .env-body {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(160deg, #ffeef2 0%, #fadce7 100%);
-    border-radius: 4px 4px 12px 12px;
-    border: 1.5px solid rgba(180,110,130,0.4);
-    overflow: hidden;
-  }
+/* HERO */
+.hero{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  transform-style:preserve-3d;
+}
 
-  .env-body::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 55%;
-    background: linear-gradient(170deg, #fbe2eb 0%, #f4cbdb 100%);
-    clip-path: polygon(0 30%, 50% 0%, 100% 30%, 100% 100%, 0 100%);
-  }
+.hero h1{
+  font-family:'Great Vibes',cursive;
+  font-size:90px;
+  color:var(--rose);
+  text-shadow:0 20px 60px rgba(189,104,123,0.25);
+}
 
-  .env-flap-left {
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 50%; height: 58%;
-    background: linear-gradient(135deg, #fadce7, #ebaed1);
-    clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 100%);
-    border-right: 1px solid rgba(180,110,130,0.3);
-  }
+/* SECTION BASE */
+section{
+  padding:120px 20px;
+  text-align:center;
+  transform-style:preserve-3d;
+}
 
-  .env-flap-right {
-    position: absolute;
-    bottom: 0; right: 0;
-    width: 50%; height: 58%;
-    background: linear-gradient(225deg, #fadce7, #ebaed1);
-    clip-path: polygon(100% 0, 0 30%, 0 100%, 100% 100%);
-  }
+/* COUNTDOWN */
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin-top:40px;
+}
 
-  .env-flap-top {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 55%;
-    background: linear-gradient(170deg, #fbcfe0, #f2a4bf);
-    clip-path: polygon(0 0, 50% 75%, 100% 0);
-    transform-origin: top center;
-    transition: transform 0.8s ease-in-out;
-    z-index: 3;
-  }
+.box{
+  background:rgba(255,255,255,0.6);
+  backdrop-filter:blur(10px);
+  padding:20px;
+  border-radius:16px;
+  min-width:90px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.08);
+}
 
-  .env-flap-top.open {
-    transform: rotateX(180deg);
-  }
+/* 3D DEPTH */
+.depth{
+  will-change:transform;
+}
 
-  .env-seal {
-    position: absolute;
-    top: 40%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 64px; height: 64px;
-    z-index: 4;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
+/* TITLE */
+.title{
+  font-size:50px;
+  font-family:'Great Vibes',cursive;
+  color:var(--rose);
+}
 
-  .env-seal.hidden {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.5);
-  }
-
-  .seal-circle {
-    width: 64px; height: 64px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #de829f, #a24b69);
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 20px rgba(130,50,75,0.5), inset 0 1px 3px rgba(255,255,255,0.4);
-    font-family: 'Great Vibes', cursive, 'Brush Script MT', sans-serif !important;
-    color: white;
-    font-size: 26px;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  }
-
-  .env-card {
-    position: absolute;
-    bottom: 8%;
-    left: 10%; right: 10%;
-    height: 80%;
-    background: white;
-    border-radius: 4px;
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column;
-    z-index: 2;
-    transition: transform 0.8s ease-in-out;
-    box-shadow: 0 2px 20px rgba(150,90,110,0.2);
-    overflow: hidden;
-  }
-
-  .env-card.rise {
-    transform: translateY(-120%);
-  }
-
-  .env-card-inner {
-    text-align: center;
-    padding: 16px;
-  }
-
-  .env-card-inner p {
-    font-family: 'Great Vibes', cursive, 'Brush Script MT', sans-serif !important;
-    font-size: clamp(22px, 5vw, 32px);
-    color: var(--dusty-rose);
-    line-height: 1.3;
-    font-weight: 600;
-  }
-
-  .env-card-inner span {
-    font-family: 'Jost', sans-serif;
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--text-mid);
-    display: block;
-    margin-top: 6px;
-  }
-
-  .env-hint {
-    position: absolute;
-    bottom: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: 'Jost', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--text-dark);
-    white-space: nowrap;
-    animation: pulse-hint 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse-hint {
-    0%, 100% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
-    50% { opacity: 1; transform: translateX(-50%) translateY(-4px); }
-  }
-
-  /* ─── MAIN CONTENT ─── */
-  #main-content {
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-    position: relative;
-    z-index: 10; /* Çiçeklerin üstünde kalması için */
-    background: var(--cream); /* Zarf açılınca zemin krem kalır */
-  }
-
-  #main-content.visible {
-    opacity: 1;
-  }
-
-  /* ─── HERO BÖLÜMÜ ─── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 80px 20px;
-    overflow: hidden;
-    background: var(--cream); /* Blok renk kaldırıldı */
-  }
-
-  .hero-bg-pattern {
-    position: absolute;
-    inset: 0;
-    background-image:
-      radial-gradient(circle at 50% 50%, var(--border-light) 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  .hero-divider {
-    width: 1px;
-    height: 45px;
-    background: linear-gradient(to bottom, transparent, var(--dusty-rose), transparent);
-    margin: 20px auto;
-  }
-
-  .hero-label {
-    font-family: 'Jost', sans-serif;
-    font-weight: 600;
-    font-size: 15px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--text-dark);
-    margin-bottom: 20px;
-    text-align: center;
-  }
-
-  .hero-poem-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: clamp(18px, 3.8vw, 23px);
-    color: var(--text-light);
-    line-height: 1.8;
-    font-weight: 600;
-    text-align: center;
-    max-width: 550px;
-    margin: 10px auto 30px;
-  }
-
-  .hero-names {
-    font-family: 'Great Vibes', cursive, 'Brush Script MT', sans-serif !important;
-    font-size: clamp(65px, 14vw, 110px);
-    color: var(--dusty-rose);
-    line-height: 1;
-    text-align: center;
-    text-shadow: 0 4px 20px rgba(180,80,110,0.15);
-    position: relative;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-
-  .hero-amp {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(32px, 8vw, 54px);
-    font-style: italic;
-    color: var(--gold);
-    display: block;
-    line-height: 1.2;
-    margin: 2px 0;
-  }
-
-  .hero-date-box {
-    margin: 30px 0;
-    text-align: center;
-  }
-
-  .hero-date {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(24px, 5.5vw, 34px);
-    font-weight: bold;
-    letter-spacing: 6px;
-    color: var(--text-dark);
-    text-transform: uppercase;
-  }
-
-  .hero-time {
-    font-family: 'Jost', sans-serif;
-    font-weight: 600;
-    font-size: 17px;
-    letter-spacing: 4px;
-    color: var(--text-mid);
-    margin-top: 8px;
-  }
-
-  .hero-flower-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 15px 0;
-    font-size: 28px;
-  }
-
-  /* ─── GERİ SAYIM (COUNTDOWN) ─── */
-  .countdown-section {
-    background: var(--cream); /* Blok renk kaldırıldı */
-    padding: 100px 20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .countdown-grid {
-    display: flex;
-    justify-content: center;
-    gap: clamp(12px, 3vw, 32px);
-    flex-wrap: wrap;
-    margin-top: 40px;
-  }
-
-  .count-item {
-    background: white; /* Kartlar saf beyaz, krem üzerinde vurgulu */
-    backdrop-filter: blur(5px);
-    border-radius: 16px;
-    padding: 24px 32px;
-    min-width: 110px;
-    border: 1px solid rgba(226,168,181,0.3);
-    box-shadow: 0 5px 15px rgba(180,90,110,0.05);
-  }
-
-  .count-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 8vw, 56px);
-    font-weight: bold;
-    color: var(--dusty-rose);
-    display: block;
-    line-height: 1;
-  }
-
-  .count-label {
-    font-family: 'Jost', sans-serif;
-    font-weight: 500;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-dark);
-    margin-top: 6px;
-    display: block;
-  }
-
-  /* ─── ETKİNLİK DETAYLARI ─── */
-  .details-section {
-    padding: 100px 20px;
-    max-width: 860px;
-    margin: 0 auto;
-    background: var(--cream); /* Sabit krem */
-  }
-
-  .detail-cards {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    max-width: 650px;
-    margin: 0 auto;
-  }
-
-  @media (max-width: 520px) {
-    .detail-cards {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .detail-card {
-    background: white; /* Kartlar beyaz */
-    border: 1px solid rgba(226,168,181,0.3);
-    border-radius: 20px;
-    padding: 40px 24px;
-    text-align: center;
-    box-shadow: 0 8px 24px rgba(180,90,110,0.06);
-  }
-
-  .detail-icon { font-size: 40px; margin-bottom: 16px; display: block; }
-
-  .detail-card h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
-    font-weight: bold;
-    color: var(--dusty-rose);
-    margin-bottom: 12px;
-    letter-spacing: 1px;
-  }
-
-  .detail-card p {
-    font-family: 'Jost', sans-serif;
-    font-weight: 500;
-    font-size: 17px;
-    color: var(--text-dark);
-    line-height: 1.6;
-  }
-
-  /* ─── MEKAN VE MAPS BÖLÜMÜ ─── */
-  .venue-section {
-    padding: 120px 20px;
-    background: var(--cream); /* Blok renk kaldırıldı */
-    text-align: center;
-  }
-
-  .venue-map-placeholder {
-    max-width: 580px;
-    margin: 0 auto;
-    background: white; /* Harita kartı beyaz */
-    border: 1px solid var(--border-light);
-    border-radius: 24px;
-    padding: 50px 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-  }
-
-  .venue-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(26px, 5.5vw, 36px);
-    font-style: italic;
-    color: var(--text-dark);
-    margin-bottom: 16px;
-    font-weight: bold;
-  }
-
-  .venue-address {
-    font-family: 'Jost', sans-serif;
-    font-weight: 500;
-    font-size: 17px;
-    color: var(--text-mid);
-    line-height: 1.7;
-    margin-bottom: 30px;
-  }
-
-  .maps-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 16px 36px;
-    background: linear-gradient(135deg, #bd687b, #a24b69);
-    color: white;
-    text-decoration: none;
-    border-radius: 50px;
-    font-family: 'Jost', sans-serif;
-    font-weight: 600;
-    font-size: 15px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    box-shadow: 0 8px 24px rgba(160,70,95,0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .maps-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(160,70,95,0.45);
-  }
-
-  footer {
-    padding: 100px 20px;
-    text-align: center;
-    background: var(--cream); /* Sabit krem */
-    border-top: 1px solid var(--border-light);
-  }
-
-  .footer-names {
-    font-family: 'Great Vibes', cursive, 'Brush Script MT', sans-serif !important;
-    font-size: clamp(42px, 10vw, 70px);
-    color: var(--dusty-rose);
-    margin-bottom: 16px;
-    font-weight: bold;
-  }
-
-  .footer-tagline {
-    font-family: 'Jost', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--text-mid);
-  }
-
-  .section-tag {
-    font-family: 'Jost', sans-serif;
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--text-dark);
-    text-align: center;
-    margin-bottom: 12px;
-  }
-
-  .section-title {
-    font-family: 'Great Vibes', cursive, 'Brush Script MT', sans-serif !important;
-    font-size: clamp(38px, 9vw, 65px);
-    color: var(--dusty-rose);
-    text-align: center;
-    margin-bottom: 40px;
-    font-weight: bold;
-  }
-
-  .floral-divider {
-    text-align: center;
-    font-size: 28px;
-    padding: 40px 0;
-    background: var(--cream);
-  }
+/* CANVAS FIX */
+canvas{display:block;}
 </style>
 </head>
+
 <body>
 
-<div id="envelope-overlay" onclick="openEnvelope()">
-  <div class="env-scene">
-    <div class="env-body">
-      <div class="env-flap-left"></div>
-      <div class="env-flap-right"></div>
-      <div class="env-card" id="env-card">
-        <div class="env-card-inner">
-          <p>Yasemin & Özcan</p>
-          <span>düğün davetiyesi</span>
-        </div>
-      </div>
-    </div>
-    <div class="env-flap-top" id="env-flap-top"></div>
-    <div class="env-seal" id="env-seal">
-      <div class="seal-circle">Y&Ö</div>
-    </div>
+<canvas id="flower-canvas"></canvas>
+
+<!-- ENVELOPE -->
+<div id="envelope" onclick="openSite()">
+  <div class="env-card">
+    <h1>Yasemin & Özcan</h1>
+    <p>Düğün Davetiyesi</p>
+    <small>dokun ve aç</small>
   </div>
-  <div class="env-hint">✦ açmak için dokunun ✦</div>
 </div>
 
-<div id="leaf-container"></div>
+<!-- MAIN -->
+<div id="main">
 
-<div id="main-content">
+  <section class="hero depth">
+    <h1>Yasemin & Özcan</h1>
+    <p>18 Ağustos 2026 • 20:00</p>
 
-  <div class="hero">
-    <div class="hero-bg-pattern"></div>
-
-    <p class="hero-label">En mutlu günümüze davetlisiniz</p>
-    
-    <p class="hero-poem-text">
-      Sevinçle, umutla ve sevgiyle dolu bu yeni yolculukta bize eşlik edin.
-    </p>
-
-    <div class="hero-divider"></div>
-
-    <div class="hero-names">
-      Yasemin
-      <span class="hero-amp">&</span>
-      Özcan
-    </div>
-
-    <div class="hero-flower-row">
-      🌸 🌷 🌸 🌷
-    </div>
-
-    <div class="hero-date-box">
-      <p class="hero-date">18 Ağustos 2026</p>
-      <p class="hero-time">Saat 20.00</p>
-    </div>
-
-    <div class="hero-divider"></div>
-  </div>
-
-  <div class="countdown-section src-animation fade-in-up">
-    <p class="section-tag">düğüne kalan süre</p>
-    <h2 class="section-title">Geri Sayım</h2>
-    <div class="countdown-grid" id="countdown">
-      <div class="count-item">
-        <span class="count-num" id="days">--</span>
-        <span class="count-label">Gün</span>
-      </div>
-      <div class="count-item">
-        <span class="count-num" id="hours">--</span>
-        <span class="count-label">Saat</span>
-      </div>
-      <div class="count-item">
-        <span class="count-num" id="minutes">--</span>
-        <span class="count-label">Dakika</span>
-      </div>
-      <div class="count-item">
-        <span class="count-num" id="seconds">--</span>
-        <span class="count-label">Saniye</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="floral-divider">🌸 🌿 🌷 🌿 🌸</div>
-
-  <section class="details-section src-animation fade-in-up">
-    <p class="section-tag">bilgiler</p>
-    <h2 class="section-title">Etkinlik Detayları</h2>
-    
-    <div class="detail-cards">
-      <div class="detail-card">
-        <span class="detail-icon">📅</span>
-        <h3>Tarih</h3>
-        <p>18 Ağustos 2026<br>Salı</p>
-      </div>
-      <div class="detail-card">
-        <span class="detail-icon">🕗</span>
-        <h3>Saat</h3>
-        <p>Akşam 20:00<br>Kapılar 19:30'da açılır</p>
-      </div>
+    <div class="countdown depth">
+      <div class="box"><div id="d">--</div>Gün</div>
+      <div class="box"><div id="h">--</div>Saat</div>
+      <div class="box"><div id="m">--</div>Dakika</div>
+      <div class="box"><div id="s">--</div>Saniye</div>
     </div>
   </section>
 
-  <div class="venue-section src-animation fade-in-up">
-    <p class="section-tag">nerede</p>
-    <h2 class="section-title">Düğün Yeri</h2>
-    
-    <div class="venue-map-placeholder">
-      <p class="venue-name">Gloria Düğün Salonu</p>
-      <p class="venue-address">
-        Çekmece Kavşağı Çevreyolu Üzeri<br>
-        Lukoil Petrol Ofisi Karşısı, Antakya / Hatay
-      </p>
-      <a href="https://goo.gl/maps/bY9zYvXzZ7VfJtK88" target="_blank" rel="noopener noreferrer" class="maps-btn">
-        🗺️ Yol Tarifi ve Harita
-      </a>
-    </div>
-  </div>
+  <section class="depth">
+    <div class="title">Love Story Begins</div>
+    <p>Birlikte yazılan en güzel hikaye…</p>
+  </section>
 
-  <footer>
-    <div class="footer-names">Yasemin & Özcan</div>
-  </footer>
+  <section class="depth">
+    <div class="title">Location</div>
+    <p>Gloria Wedding Hall • Hatay</p>
+  </section>
 
 </div>
 
 <script>
-// ─── SAF ZARF AÇILMA SİSTEMİ ───
-let opened = false;
-function openEnvelope() {
-  if (opened) return;
-  opened = true;
 
-  const flap = document.getElementById('env-flap-top');
-  const seal = document.getElementById('env-seal');
-  const card = document.getElementById('env-card');
-  const overlay = document.getElementById('envelope-overlay');
-  const main = document.getElementById('main-content');
-  const leafContainer = document.getElementById('leaf-container'); // 🌸
-
-  seal.classList.add('hidden');
-
-  setTimeout(() => {
-    flap.classList.add('open');
-  }, 300);
-
-  setTimeout(() => {
-    card.classList.add('rise');
-  }, 800);
-
-  setTimeout(() => {
-    overlay.style.opacity = '0';
-    main.classList.add('visible');
-    leafContainer.classList.add('active'); // 🌸
-    startLeafAnimation(); // Çiçekleri başlat 🌸
+/* OPEN */
+function openSite(){
+  document.getElementById("envelope").style.opacity="0";
+  setTimeout(()=>{
+    document.getElementById("envelope").style.display="none";
+    document.getElementById("main").classList.add("show");
     startCountdown();
-    initScrollAnimations();
-    
-    setTimeout(() => {
-      overlay.style.display = 'none';
-    }, 800);
-  }, 1600);
+  },1000);
 }
 
-// ─── GERI SAYIM SİSTEMİ ───
-function startCountdown() {
-  const target = new Date('2026-08-18T20:00:00');
-  function update() {
-    const now = new Date();
-    const diff = target - now;
-    if (diff <= 0) {
-      const items = ['days', 'hours', 'minutes', 'seconds'];
-      items.forEach(id => document.getElementById(id).textContent = '🎊');
-      return;
+/* COUNTDOWN */
+function startCountdown(){
+  const t=new Date("2026-08-18T20:00:00");
+
+  setInterval(()=>{
+    const n=new Date();
+    const d=t-n;
+
+    document.getElementById("d").innerText=Math.floor(d/86400000);
+    document.getElementById("h").innerText=Math.floor(d%86400000/3600000);
+    document.getElementById("m").innerText=Math.floor(d%3600000/60000);
+    document.getElementById("s").innerText=Math.floor(d%60000/1000);
+  },1000);
+}
+
+/* 3D SCROLL */
+const layers=document.querySelectorAll(".depth");
+
+window.addEventListener("scroll",()=>{
+  let y=window.scrollY;
+
+  layers.forEach((el,i)=>{
+    let speed=(i+1)*0.2;
+
+    el.style.transform=`
+      translateY(${y*speed}px)
+      rotateX(${-y*0.02*speed}deg)
+      scale(${1 - y*0.0003*speed})
+    `;
+  });
+});
+
+/* FLOWERS CANVAS */
+const c=document.getElementById("flower-canvas");
+const x=c.getContext("2d");
+
+let w,h;
+function r(){
+  w=c.width=innerWidth;
+  h=c.height=innerHeight;
+}
+r();window.addEventListener("resize",r);
+
+const e=["🌸","🌷","🌺","🌿"];
+const p=[];
+
+for(let i=0;i<70;i++){
+  p.push(make());
+}
+
+function make(){
+  return{
+    x:Math.random()*w,
+    y:Math.random()*-h,
+    s:Math.random()*22+10,
+    vy:Math.random()*1.5+0.5,
+    vx:Math.random()*1-0.5,
+    r:Math.random()*360,
+    vr:Math.random()*2-1,
+    e:e[Math.floor(Math.random()*e.length)]
+  };
+}
+
+function anim(){
+  x.clearRect(0,0,w,h);
+
+  for(let o of p){
+    o.y+=o.vy;
+    o.x+=o.vx;
+    o.r+=o.vr;
+
+    x.save();
+    x.translate(o.x,o.y);
+    x.rotate(o.r*Math.PI/180);
+    x.font=`${o.s}px serif`;
+    x.fillText(o.e,0,0);
+    x.restore();
+
+    if(o.y>h+50){
+      Object.assign(o,make(),{y:-50});
     }
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    
-    document.getElementById('days').textContent = String(d).padStart(2,'0');
-    document.getElementById('hours').textContent = String(h).padStart(2,'0');
-    document.getElementById('minutes').textContent = String(m).padStart(2,'0');
-    document.getElementById('seconds').textContent = String(s).padStart(2,'0');
   }
-  update();
-  setInterval(update, 1000);
+
+  requestAnimationFrame(anim);
 }
+anim();
 
-// ─── GİRİŞ ANIMASYONU (SCROLL) ───
-function initScrollAnimations() {
-  const animatedElements = document.querySelectorAll('.src-animation');
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('appear');
-      }
-    });
-  }, { threshold: 0.1 });
-
-  animatedElements.forEach(el => observer.observe(el));
-}
-
-// ──────────────────────────────────────────────────
-// // ──────────────────────────────────────────────────
-function startLeafAnimation() {
-  const container = document.getElementById('leaf-container');
-  const leaves = ['🌸', '🌷', '🌸', '🌿', '🍂'];
-  const leafCount = 60; // Parçacık sayısı
-
-  for (let i = 0; i < leafCount; i++) {
-    const leaf = document.createElement('span');
-    leaf.className = 'leaf';
-    leaf.textContent = leaves[Math.floor(Math.random() * leaves.length)];
-
-    // CSS Değişkenlerini (Custom Properties) atıyoruz
-    
-    // Rastgele yatay başlangıç pozisyonu (0vw - 100vw)
-    leaf.style.setProperty('--start-x', Math.random() * 100 + 'vw');
-    
-    // Rastgele dikey başlangıç pozisyonu (Genelde ekranın üstü, -10vh ile -50vh arası)
-    leaf.style.setProperty('--start-y', Math.random() * -40 - 10 + 'vh');
-    
-    // Rastgele animasyon gecikmesi (0s - 15s arası, hepsi aynı anda başlamasın)
-    leaf.style.setProperty('--delay', Math.random() * 15 + 's');
-    
-    // Rastgele düşme mesafesi (120vh - 170vh arası, ekranın altına kadar)
-    leaf.style.setProperty('--fall-distance', Math.random() * 50 + 120 + 'vh');
-    
-    // Rastgele sallanma mesafesi (-50px ile 50px arası)
-    leaf.style.setProperty('--sway-distance', (Math.random() - 0.5) * 100 + 'px');
-    
-    // Rastgele dönme hızı (360deg ile 1080deg arası)
-    leaf.style.setProperty('--rotate-speed', Math.random() * 720 + 360 + 'deg');
-    
-    // Rastgele animasyon süresi (Hız: 8s ile 15s arası)
-    const duration = Math.random() * 7 + 8 + 's';
-    leaf.style.animationDuration = duration;
-
-    // Hafif rastgele boyutlandırma
-    const size = Math.random() * 0.4 + 0.8; // 0.8 ile 1.2 arası
-    leaf.style.fontSize = size * 24 + 'px';
-
-    container.appendChild(leaf);
-  }
-}
 </script>
 
 </body>
