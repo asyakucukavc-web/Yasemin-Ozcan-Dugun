@@ -6,7 +6,7 @@
 <title>Yasemin & Özcan | Düğün Davetiyesi</title>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght=0,400;0,600;1,400&family=Great+Vibes&family=Jost:wght=300;400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap');
 
   :root {
     --blush: #e2a8b5;
@@ -42,15 +42,14 @@
     transform: translateY(0);
   }
 
-  /* ──────────────────────────────────────────────────
-     ────────────────────────────────────────────────── */
+  /* 🌸 Çiçek Animasyonu Eklentisi (CSS) 🌸 */
   #leaf-container {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     pointer-events: none; /* Üzerine tıklanmasını engeller */
-    z-index: 5; /* Zarfın altında, içeriğin üstünde kalır (isteğe bağlı) */
+    z-index: 5; /* Zarfın altında, içeriğin üstünde kalır */
     overflow: hidden;
-    display: none; /* Başlangıçta gizli, zarf açılınca açılacak */
+    display: none; /* Başlangıçta gizli, zarf açılınca aktif olur */
   }
 
   #leaf-container.active {
@@ -61,33 +60,28 @@
     position: absolute;
     display: block;
     pointer-events: none;
-    /* Çiçek emojisi boyutu */
+    /* Çiçek boyutu */
     font-size: clamp(14px, 3vw, 24px); 
     opacity: 0.8;
     user-select: none;
-    /* Düşme ve dönme animasyonları */
+    /* Düşme, sallanma ve dönme animasyonları */
     animation: fall linear infinite, sway ease-in-out infinite, rotate linear infinite;
   }
 
-  /* Aşağı Düşme Animasyonu */
   @keyframes fall {
     0% { transform: translateY(-10vh); }
     100% { transform: translateY(110vh); }
   }
 
-  /* Sağa Sola Sallanma Animasyonu */
   @keyframes sway {
     0%, 100% { transform: translateX(0); }
     50% { transform: translateX(50px); }
   }
 
-  /* Dönme Animasyonu */
   @keyframes rotate {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
-  /* ──────────────────────────────────────────────────
-     ────────────────────────────────────────────────── */
 
   /* ─── ENVELOPE (ZARF) OVERLAY ─── */
   #envelope-overlay {
@@ -593,10 +587,7 @@
   <div class="env-hint">✦ açmak için dokunun ✦</div>
 </div>
 
-Animasyonun gerçekleşeceği ana kapsayıcı.
-══════════════════════════════════════════════════ -->
 <div id="leaf-container"></div>
-────────────────────────────────────────────────── -->
 
 <div id="main-content">
 
@@ -682,7 +673,7 @@ Animasyonun gerçekleşeceği ana kapsayıcı.
         Çekmece Kavşağı Çevreyolu Üzeri<br>
         Lukoil Petrol Ofisi Karşısı, Antakya / Hatay
       </p>
-      <a href="https://maps.google.com/?q=Gloria+Düğün+Salonu+Çekmece+Kavşağı+Antakya+Hatay" target="_blank" class="maps-btn">
+      <a href="https://goo.gl/maps/bY9zYvXzZ7VfJtK88" target="_blank" rel="noopener noreferrer" class="maps-btn">
         🗺️ Yol Tarifi ve Harita
       </a>
     </div>
@@ -773,8 +764,7 @@ function initScrollAnimations() {
   animatedElements.forEach(el => observer.observe(el));
 }
 
-// ──────────────────────────────────────────────────
-// // ──────────────────────────────────────────────────
+// 🌸 Çiçek Animasyonu Eklentisi (JavaScript) 🌸
 function startLeafAnimation() {
   const container = document.getElementById('leaf-container');
   // Kullanılacak çiçek emojileri listesi
@@ -802,15 +792,13 @@ function startLeafAnimation() {
     leaf.style.animationDuration = `${fallDuration}, ${swayDuration}, ${rotateDuration}`;
     leaf.style.animationDelay = `${delay}, 0s, 0s`; // Gecikme sadece düşmeye uygulanır
 
-    // Boyutu hafifçe rastgeleleştir (daha doğal görünüm)
+    // Boyutu hafifçe rastgeleleştir
     const size = Math.random() * 0.5 + 0.8; // 0.8 ile 1.3 katı arası
     leaf.style.transform += ` scale(${size})`;
 
     container.appendChild(leaf);
   }
 }
-// ──────────────────────────────────────────────────
-// // ──────────────────────────────────────────────────
 </script>
 
 </body>
