@@ -3,35 +3,26 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Yasemin & Özcan | Invitation</title>
+<title>Düğün Davetiyesi</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Great+Vibes&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#f7f3ee;
+  --bg:#f6f1ea;
   --ink:#1b1b1b;
   --rose:#c48b9f;
-  --gold:#c8a96a;
-  .invite-title{
-  font-family: "Playfair Display", serif;
-  font-size: 14px;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.6);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeInUp 1s ease forwards 0.4s;
 }
 
+/* RESET */
 *{margin:0;padding:0;box-sizing:border-box}
 body{
+  font-family:Inter;
   background:var(--bg);
   overflow-x:hidden;
-  font-family:Inter;
 }
 
-/* ---------------- FLOWERS ---------------- */
+/* FLOWERS */
 #petals{
   position:fixed;
   inset:0;
@@ -41,52 +32,53 @@ body{
 .petal{
   position:absolute;
   font-size:18px;
-  opacity:.8;
   animation:fall linear infinite;
+  opacity:.8;
 }
 @keyframes fall{
   from{transform:translateY(-10vh) rotate(0)}
   to{transform:translateY(110vh) rotate(360deg)}
 }
 
-/* ---------------- ENVELOPE ---------------- */
+/* ENVELOPE */
 #envelope{
   position:fixed;
   inset:0;
-  background:linear-gradient(135deg,#f3d6df,#e8e1d6);
+  background:linear-gradient(135deg,#f3d6df,#eadfd2);
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:999;
-  transition:.8s ease;
+  transition:.8s;
 }
 
-.env-box{
-  width:320px;height:220px;
+.env{
+  width:320px;
+  height:220px;
   position:relative;
   cursor:pointer;
   transform-style:preserve-3d;
-  transition:1s;
 }
 
 .env-front{
   position:absolute;
   inset:0;
   background:white;
-  border-radius:8px;
+  border-radius:10px;
   box-shadow:0 30px 80px rgba(0,0,0,.2);
 }
 
 .env-flap{
   position:absolute;
-  width:100%;height:100%;
+  width:100%;
+  height:100%;
   background:linear-gradient(135deg,#f2cbd7,#e6b7c7);
   clip-path:polygon(0 0,50% 60%,100% 0);
   transform-origin:top;
-  transition:1s;
+  transition:.9s;
 }
 
-.env-box.open .env-flap{
+.env.open .env-flap{
   transform:rotateX(180deg);
 }
 
@@ -102,10 +94,10 @@ body{
   color:var(--rose);
 }
 
-/* ---------------- MAIN ---------------- */
+/* MAIN */
 main{
   opacity:0;
-  transform:translateY(30px);
+  transform:translateY(25px);
   transition:1s;
   position:relative;
   z-index:2;
@@ -116,7 +108,7 @@ main.show{
   transform:translateY(0);
 }
 
-/* ---------------- HERO ---------------- */
+/* HERO */
 .hero{
   height:100vh;
   display:flex;
@@ -124,83 +116,86 @@ main.show{
   align-items:center;
   justify-content:center;
   text-align:center;
-  perspective:1200px;
+  padding:20px;
+}
+
+.invite-title{
+  font-size:12px;
+  letter-spacing:5px;
+  text-transform:uppercase;
+  margin-bottom:15px;
+  color:rgba(0,0,0,.6);
 }
 
 .hero h1{
-  <div class="invite-title">Düğünümüze Davetlisiniz!</div>
   font-family:"Great Vibes";
   font-size:90px;
   color:var(--ink);
-  transform:translateZ(60px);
-    margin-top:10px;
 }
 
 .hero p{
   margin-top:10px;
-  letter-spacing:4px;
-  font-weight:300;
+  letter-spacing:3px;
 }
 
-/* ---------------- 3D SCROLL ---------------- */
-.scroll{
-  padding:120px 20px;
+/* CARDS */
+.section{
+  padding:100px 20px;
   text-align:center;
-  transform:translateZ(0);
 }
 
 .card{
   max-width:500px;
-  margin:40px auto;
+  margin:30px auto;
   padding:40px;
   background:white;
   border-radius:20px;
-  box-shadow:0 30px 80px rgba(0,0,0,.08);
-  transform:translateY(60px);
+  box-shadow:0 25px 70px rgba(0,0,0,.08);
   opacity:0;
+  transform:translateY(40px);
   transition:1s;
 }
 
 .card.show{
-  transform:translateY(0);
   opacity:1;
+  transform:translateY(0);
 }
 
-/* ---------------- COUNTDOWN ---------------- */
+/* COUNTDOWN */
 .countdown{
   text-align:center;
-  padding:100px 20px;
+  padding:80px 20px;
 }
 
-.time{
+.boxes{
   display:flex;
   justify-content:center;
-  gap:20px;
+  gap:15px;
 }
 
 .box{
-  padding:20px;
   background:white;
-  border-radius:12px;
-  min-width:90px;
+  padding:20px;
+  min-width:80px;
+  border-radius:10px;
 }
 
-/* ---------------- MAP ---------------- */
+/* MAP */
 .map{
   text-align:center;
-  padding:100px 20px;
+  padding:80px 20px;
 }
 
 .btn{
   display:inline-block;
-  padding:15px 30px;
-  background:var(--ink);
+  padding:14px 28px;
+  background:#1b1b1b;
   color:white;
   border-radius:30px;
   text-decoration:none;
 }
 
-/* ---------------- OPEN ---------------- */
+/* ENVELOPE HIDE */
 #envelope.hide{
   opacity:0;
   pointer-events:none;
@@ -213,12 +208,12 @@ main.show{
 <div id="petals"></div>
 
 <div id="envelope" onclick="openEnv()">
-  <div class="env-box" id="box">
+  <div class="env" id="env">
     <div class="env-flap"></div>
     <div class="env-front"></div>
     <div class="env-text">
       Yasemin & Özcan<br>
-      <small style="font-family:Inter;font-size:12px;letter-spacing:3px">INVITATION</small>
+      <small style="font-family:Inter;font-size:11px;letter-spacing:3px">INVITATION</small>
     </div>
   </div>
 </div>
@@ -226,11 +221,12 @@ main.show{
 <main id="main">
 
 <section class="hero">
+  <div class="invite-title">Düğünümüze Davetlisiniz!</div>
   <h1>Yasemin & Özcan</h1>
-  <p>WEDDING INVITATION</p>
+  <p>18 Ağustos 2026 • 20:00</p>
 </section>
 
-<section class="scroll">
+<section class="section">
   <div class="card">📅 18 Ağustos 2026</div>
   <div class="card">🕗 20:00</div>
   <div class="card">📍 Gloria Wedding Hall</div>
@@ -238,7 +234,7 @@ main.show{
 
 <section class="countdown">
   <h2>Geri Sayım</h2>
-  <div class="time">
+  <div class="boxes">
     <div class="box" id="d">00</div>
     <div class="box" id="h">00</div>
     <div class="box" id="m">00</div>
@@ -247,7 +243,7 @@ main.show{
 </section>
 
 <section class="map">
-  <a class="btn" href="https://maps.google.com">Haritada Aç</a>
+  <a class="btn" href="https://maps.google.com">Harita</a>
 </section>
 
 </main>
@@ -256,7 +252,7 @@ main.show{
 
 /* ENVELOPE */
 function openEnv(){
-  document.getElementById("box").classList.add("open");
+  document.getElementById("env").classList.add("open");
 
   setTimeout(()=>{
     document.getElementById("envelope").classList.add("hide");
@@ -265,25 +261,25 @@ function openEnv(){
 }
 
 /* PETALS */
-const petalBox = document.getElementById("petals");
-const emojis = ["🌸","🌷","🌺"];
+const petalBox=document.getElementById("petals");
+const emojis=["🌸","🌷","🌺","🌿"];
 
-for(let i=0;i<40;i++){
-  const s=document.createElement("div");
-  s.className="petal";
-  s.innerHTML=emojis[Math.floor(Math.random()*3)];
-  s.style.left=Math.random()*100+"vw";
-  s.style.animationDuration=(5+Math.random()*5)+"s";
-  s.style.fontSize=(14+Math.random()*18)+"px";
-  petalBox.appendChild(s);
+for(let i=0;i<35;i++){
+  const p=document.createElement("div");
+  p.className="petal";
+  p.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDuration=(5+Math.random()*5)+"s";
+  p.style.fontSize=(14+Math.random()*18)+"px";
+  petalBox.appendChild(p);
 }
 
-/* 3D SCROLL */
+/* CARDS ANIMATION */
 const cards=document.querySelectorAll(".card");
 const io=new IntersectionObserver(e=>{
   e.forEach(x=>{
-    if(x.isIntersecting)x.target.classList.add("show");
-  })
+    if(x.isIntersecting) x.target.classList.add("show");
+  });
 },{threshold:.2});
 cards.forEach(c=>io.observe(c));
 
