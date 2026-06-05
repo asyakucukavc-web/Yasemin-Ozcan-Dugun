@@ -788,6 +788,7 @@ function startLeafAnimation() {
     const delay = Math.random() * -20 + 's';             // Başlangıçta hepsi aynı anda düşmesin
 
     // Animasyon özelliklerini CSS olarak uygula
+    // NOT: Animasyon isimleri ve süreleri aynı sırayla belirtilmelidir.
     leaf.style.animationName = 'fall, sway, rotate';
     leaf.style.animationDuration = `${fallDuration}, ${swayDuration}, ${rotateDuration}`;
     leaf.style.animationDelay = `${delay}, 0s, 0s`; // Gecikme sadece düşmeye uygulanır
@@ -797,6 +798,7 @@ function startLeafAnimation() {
     leaf.style.transform += ` scale(${size})`;
 
     container.appendChild(leaf);
+  }
   }
 }
 </script>
