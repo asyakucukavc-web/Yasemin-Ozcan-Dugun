@@ -10,22 +10,20 @@
 
   :root {
     --blush: #e2a8b5;
-    --blush-light: #fbe0e6;
-    --sky: #9cc2d8;
-    --sky-light: #d0e7f4;
-    --cream: #faf5ed;
     --dusty-rose: #bd687b;
     --gold: #b39255;
+    --cream: #faf5ed; /* Ana Arka Plan Rengi */
     --text-dark: #211118;
     --text-mid: #3d2230;
     --text-light: #5c3b4c;
+    --border-light: rgba(187,169,211,0.2);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--cream);
+    background: var(--cream); /* Tüm site sabit krem rengi */
     font-family: 'Jost', sans-serif;
     color: var(--text-dark);
     overflow-x: hidden;
@@ -42,14 +40,15 @@
     transform: translateY(0);
   }
 
-  /* 🌸 Çiçek Animasyonu Eklentisi (CSS) 🌸 */
+  /* ──────────────────────────────────────────────────
+     ────────────────────────────────────────────────── */
   #leaf-container {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none; /* Üzerine tıklanmasını engeller */
-    z-index: 5; /* Zarfın altında, içeriğin üstünde kalır */
+    pointer-events: none;
+    z-index: 1; /* Arka planda kalması için */
     overflow: hidden;
-    display: none; /* Başlangıçta gizli, zarf açılınca aktif olur */
+    display: none;
   }
 
   #leaf-container.active {
@@ -59,29 +58,37 @@
   .leaf {
     position: absolute;
     display: block;
-    pointer-events: none;
-    /* Çiçek boyutu */
-    font-size: clamp(14px, 3vw, 24px); 
-    opacity: 0.8;
     user-select: none;
-    /* Düşme, sallanma ve dönme animasyonları */
-    animation: fall linear infinite, sway ease-in-out infinite, rotate linear infinite;
+    font-size: 24px;
+    opacity: 0.8;
+    /* JavaScript tarafından atanan değişkenleri kullanır */
+    top: var(--start-y);
+    left: var(--start-x);
+    animation-delay: var(--delay);
+    
+    /* Üç animasyonu birleştiriyoruz: düşme, sallanma, dönme */
+    animation-name: fall-sway-rotate;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
   }
 
-  @keyframes fall {
-    0% { transform: translateY(-10vh); }
-    100% { transform: translateY(110vh); }
+  /* Tek bir akıcı animasyon anahtarı */
+  @keyframes fall-sway-rotate {
+    0% {
+      transform: translateY(0) translateX(0) rotate(0deg);
+      opacity: 0.8;
+    }
+    10% {
+      opacity: 1; /* Ortaya çıkış */
+    }
+    100% {
+      /* Düşme mesafesi JavaScript ile atanır */
+      transform: translateY(var(--fall-distance)) translateX(var(--sway-distance)) rotate(var(--rotate-speed));
+      opacity: 0; /* Kayboluş */
+    }
   }
-
-  @keyframes sway {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(50px); }
-  }
-
-  @keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+  /* ──────────────────────────────────────────────────
+     ────────────────────────────────────────────────── */
 
   /* ─── ENVELOPE (ZARF) OVERLAY ─── */
   #envelope-overlay {
@@ -247,7 +254,8 @@
     opacity: 0;
     transition: opacity 0.8s ease-in-out;
     position: relative;
-    z-index: 10;
+    z-index: 10; /* Çiçeklerin üstünde kalması için */
+    background: var(--cream); /* Zarf açılınca zemin krem kalır */
   }
 
   #main-content.visible {
@@ -262,18 +270,16 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 60px 20px;
+    padding: 80px 20px;
     overflow: hidden;
-    background: linear-gradient(170deg, #fadce2 0%, #fbf0f5 30%, #daedf8 70%, #faf5ed 100%);
+    background: var(--cream); /* Blok renk kaldırıldı */
   }
 
   .hero-bg-pattern {
     position: absolute;
     inset: 0;
     background-image:
-      radial-gradient(circle at 20% 20%, rgba(226,168,181,0.4) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(156,194,216,0.4) 0%, transparent 50%),
-      radial-gradient(circle at 50% 50%, rgba(187,169,211,0.25) 0%, transparent 60%);
+      radial-gradient(circle at 50% 50%, var(--border-light) 0%, transparent 60%);
     pointer-events: none;
   }
 
@@ -281,7 +287,7 @@
     width: 1px;
     height: 45px;
     background: linear-gradient(to bottom, transparent, var(--dusty-rose), transparent);
-    margin: 15px auto;
+    margin: 20px auto;
   }
 
   .hero-label {
@@ -291,11 +297,10 @@
     letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--text-dark);
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     text-align: center;
   }
 
-  /* En Başa Alınan Giriş Şiiri/Sözü */
   .hero-poem-text {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
@@ -305,7 +310,7 @@
     font-weight: 600;
     text-align: center;
     max-width: 550px;
-    margin: 10px auto 25px;
+    margin: 10px auto 30px;
   }
 
   .hero-names {
@@ -331,7 +336,7 @@
   }
 
   .hero-date-box {
-    margin: 25px 0;
+    margin: 30px 0;
     text-align: center;
   }
 
@@ -357,14 +362,14 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    margin: 12px 0;
-    font-size: 24px;
+    margin: 15px 0;
+    font-size: 28px;
   }
 
   /* ─── GERİ SAYIM (COUNTDOWN) ─── */
   .countdown-section {
-    background: linear-gradient(135deg, #fadce2 0%, #daedf8 100%);
-    padding: 60px 20px;
+    background: var(--cream); /* Blok renk kaldırıldı */
+    padding: 100px 20px;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -375,17 +380,17 @@
     justify-content: center;
     gap: clamp(12px, 3vw, 32px);
     flex-wrap: wrap;
-    margin-top: 32px;
+    margin-top: 40px;
   }
 
   .count-item {
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(10px);
+    background: white; /* Kartlar saf beyaz, krem üzerinde vurgulu */
+    backdrop-filter: blur(5px);
     border-radius: 16px;
     padding: 24px 32px;
-    min-width: 100px;
-    border: 1px solid rgba(226,168,181,0.5);
-    box-shadow: 0 8px 32px rgba(180,90,110,0.12);
+    min-width: 110px;
+    border: 1px solid rgba(226,168,181,0.3);
+    box-shadow: 0 5px 15px rgba(180,90,110,0.05);
   }
 
   .count-num {
@@ -408,17 +413,18 @@
     display: block;
   }
 
-  /* ─── ETKİNLİK DETAYLARI (Simetrik 2'li yapı) ─── */
+  /* ─── ETKİNLİK DETAYLARI ─── */
   .details-section {
-    padding: 80px 20px;
+    padding: 100px 20px;
     max-width: 860px;
     margin: 0 auto;
+    background: var(--cream); /* Sabit krem */
   }
 
   .detail-cards {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+    gap: 30px;
     max-width: 650px;
     margin: 0 auto;
   }
@@ -430,12 +436,12 @@
   }
 
   .detail-card {
-    background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(250,230,237,0.95));
-    border: 1px solid rgba(226,168,181,0.5);
+    background: white; /* Kartlar beyaz */
+    border: 1px solid rgba(226,168,181,0.3);
     border-radius: 20px;
     padding: 40px 24px;
     text-align: center;
-    box-shadow: 0 8px 32px rgba(180,90,110,0.1);
+    box-shadow: 0 8px 24px rgba(180,90,110,0.06);
   }
 
   .detail-icon { font-size: 40px; margin-bottom: 16px; display: block; }
@@ -459,19 +465,19 @@
 
   /* ─── MEKAN VE MAPS BÖLÜMÜ ─── */
   .venue-section {
-    padding: 90px 20px;
-    background: linear-gradient(135deg, #daedf8 0%, #fadce2 100%);
+    padding: 120px 20px;
+    background: var(--cream); /* Blok renk kaldırıldı */
     text-align: center;
   }
 
   .venue-map-placeholder {
     max-width: 580px;
     margin: 0 auto;
-    background: rgba(255,255,255,0.94);
-    border: 1px solid rgba(156,194,216,0.6);
+    background: white; /* Harita kartı beyaz */
+    border: 1px solid var(--border-light);
     border-radius: 24px;
     padding: 50px 30px;
-    box-shadow: 0 12px 40px rgba(80,140,180,0.18);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
   }
 
   .venue-name {
@@ -516,9 +522,10 @@
   }
 
   footer {
-    padding: 80px 20px;
+    padding: 100px 20px;
     text-align: center;
-    background: linear-gradient(to bottom, #faf5ed, #fadce2);
+    background: var(--cream); /* Sabit krem */
+    border-top: 1px solid var(--border-light);
   }
 
   .footer-names {
@@ -554,14 +561,15 @@
     font-size: clamp(38px, 9vw, 65px);
     color: var(--dusty-rose);
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     font-weight: bold;
   }
 
   .floral-divider {
     text-align: center;
     font-size: 28px;
-    padding: 30px 0;
+    padding: 40px 0;
+    background: var(--cream);
   }
 </style>
 </head>
@@ -686,7 +694,7 @@
 </div>
 
 <script>
-// ─── TARAYICI DOSTU SAF ZARF AÇILMA SİSTEMİ ───
+// ─── SAF ZARF AÇILMA SİSTEMİ ───
 let opened = false;
 function openEnvelope() {
   if (opened) return;
@@ -712,8 +720,8 @@ function openEnvelope() {
   setTimeout(() => {
     overlay.style.opacity = '0';
     main.classList.add('visible');
-    leafContainer.classList.add('active'); // Zarf açılınca animasyonu başlat 🌸
-    startLeafAnimation(); // JavaScript fonksiyonunu çağır 🌸
+    leafContainer.classList.add('active'); // 🌸
+    startLeafAnimation(); // Çiçekleri başlat 🌸
     startCountdown();
     initScrollAnimations();
     
@@ -730,16 +738,15 @@ function startCountdown() {
     const now = new Date();
     const diff = target - now;
     if (diff <= 0) {
-      document.getElementById('days').textContent = '🎊';
-      document.getElementById('hours').textContent = '🎊';
-      document.getElementById('minutes').textContent = '🎊';
-      document.getElementById('seconds').textContent = '🎊';
+      const items = ['days', 'hours', 'minutes', 'seconds'];
+      items.forEach(id => document.getElementById(id).textContent = '🎊');
       return;
     }
     const d = Math.floor(diff / 86400000);
     const h = Math.floor((diff % 86400000) / 3600000);
     const m = Math.floor((diff % 3600000) / 60000);
     const s = Math.floor((diff % 60000) / 1000);
+    
     document.getElementById('days').textContent = String(d).padStart(2,'0');
     document.getElementById('hours').textContent = String(h).padStart(2,'0');
     document.getElementById('minutes').textContent = String(m).padStart(2,'0');
@@ -749,7 +756,7 @@ function startCountdown() {
   setInterval(update, 1000);
 }
 
-// ─── SAF JAVASCRIPT GİRİŞ ANIMASYONU ───
+// ─── GİRİŞ ANIMASYONU (SCROLL) ───
 function initScrollAnimations() {
   const animatedElements = document.querySelectorAll('.src-animation');
   
@@ -764,38 +771,45 @@ function initScrollAnimations() {
   animatedElements.forEach(el => observer.observe(el));
 }
 
-// 🌸 Çiçek Animasyonu Eklentisi (JavaScript) 🌸
+// ──────────────────────────────────────────────────
+// // ──────────────────────────────────────────────────
 function startLeafAnimation() {
   const container = document.getElementById('leaf-container');
-  // Kullanılacak çiçek emojileri listesi
   const leaves = ['🌸', '🌷', '🌸', '🌿', '🍂'];
-  // Toplam kaç adet çiçek parçacığı olsun?
-  const leafCount = 50; 
+  const leafCount = 60; // Parçacık sayısı
 
   for (let i = 0; i < leafCount; i++) {
     const leaf = document.createElement('span');
     leaf.className = 'leaf';
-    // Rastgele bir emoji seç
     leaf.textContent = leaves[Math.floor(Math.random() * leaves.length)];
 
-    // Rastgele başlangıç pozisyonları (yatayda)
-    leaf.style.left = Math.random() * 100 + 'vw';
+    // CSS Değişkenlerini (Custom Properties) atıyoruz
     
-    // Rastgele animasyon süreleri ve gecikmeleri (farklı hızlar için)
-    const fallDuration = Math.random() * 10 + 10 + 's'; // 10-20 saniye arası düşme
-    const swayDuration = Math.random() * 4 + 3 + 's';   // 3-7 saniye arası sallanma
-    const rotateDuration = Math.random() * 5 + 5 + 's'; // 5-10 saniye arası dönme
-    const delay = Math.random() * -20 + 's';             // Başlangıçta hepsi aynı anda düşmesin
+    // Rastgele yatay başlangıç pozisyonu (0vw - 100vw)
+    leaf.style.setProperty('--start-x', Math.random() * 100 + 'vw');
+    
+    // Rastgele dikey başlangıç pozisyonu (Genelde ekranın üstü, -10vh ile -50vh arası)
+    leaf.style.setProperty('--start-y', Math.random() * -40 - 10 + 'vh');
+    
+    // Rastgele animasyon gecikmesi (0s - 15s arası, hepsi aynı anda başlamasın)
+    leaf.style.setProperty('--delay', Math.random() * 15 + 's');
+    
+    // Rastgele düşme mesafesi (120vh - 170vh arası, ekranın altına kadar)
+    leaf.style.setProperty('--fall-distance', Math.random() * 50 + 120 + 'vh');
+    
+    // Rastgele sallanma mesafesi (-50px ile 50px arası)
+    leaf.style.setProperty('--sway-distance', (Math.random() - 0.5) * 100 + 'px');
+    
+    // Rastgele dönme hızı (360deg ile 1080deg arası)
+    leaf.style.setProperty('--rotate-speed', Math.random() * 720 + 360 + 'deg');
+    
+    // Rastgele animasyon süresi (Hız: 8s ile 15s arası)
+    const duration = Math.random() * 7 + 8 + 's';
+    leaf.style.animationDuration = duration;
 
-    // Animasyon özelliklerini CSS olarak uygula
-    // NOT: Animasyon isimleri ve süreleri aynı sırayla belirtilmelidir.
-    leaf.style.animationName = 'fall, sway, rotate';
-    leaf.style.animationDuration = `${fallDuration}, ${swayDuration}, ${rotateDuration}`;
-    leaf.style.animationDelay = `${delay}, 0s, 0s`; // Gecikme sadece düşmeye uygulanır
-
-    // Boyutu hafifçe rastgeleleştir
-    const size = Math.random() * 0.5 + 0.8; // 0.8 ile 1.3 katı arası
-    leaf.style.transform += ` scale(${size})`;
+    // Hafif rastgele boyutlandırma
+    const size = Math.random() * 0.4 + 0.8; // 0.8 ile 1.2 arası
+    leaf.style.fontSize = size * 24 + 'px';
 
     container.appendChild(leaf);
   }
