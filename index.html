@@ -267,9 +267,10 @@
     100% { transform: translateX(-120px) translateY(0) scaleX(-1); opacity: 0; }
   }
 
-/* ─── MAIN CONTENT ─── */
+  /* ─── MAIN CONTENT ─── */
   #main-content {
-    opacity: 1; /* 0 yerine 1 yaparak içeriği her zaman görünür kılıyoruz */
+    opacity: 0;
+    transition: opacity 0.8s ease;
     position: relative;
     z-index: 10;
   }
@@ -486,6 +487,7 @@
     gap: clamp(12px, 3vw, 32px);
     flex-wrap: wrap;
     margin-top: 32px;
+    position: relative;
   }
 
   .count-item {
@@ -513,7 +515,7 @@
     font-size: 11px;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--text-dark);
+    color: var(--text-mid);
     margin-top: 6px;
     display: block;
   }
@@ -815,7 +817,7 @@ function createBirds() {
   });
 }
 
-// ─── SMOOTH SCROLL ───
+// ─── SMOOTH SCROLL (native) ───
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
