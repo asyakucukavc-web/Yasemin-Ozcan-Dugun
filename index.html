@@ -1,182 +1,284 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Yasemin & Özcan | Invitation</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yasemin & Özcan | Wedding Invitation</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap');
 
-:root{
-  --rose:#bd687b;
-  --bg1:#fff3f6;
-  --bg2:#f7f0ea;
+  /* BASE TEXT */
+body{
+  font-family:'Inter',sans-serif;
+  letter-spacing:0.2px;
+  -webkit-font-smoothing:antialiased;
 }
 
-/* GLOBAL */
+/* NAMES (LUXURY SIGNATURE) */
+.names, .hero h1, .seal{
+  font-family:'Playfair Display',serif;
+  font-weight:500;
+  letter-spacing:1px;
+}
+
+/* BIG ROMANTIC HEADINGS */
+h2{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:500;
+  letter-spacing:0.5px;
+}
+
+/* DATE STYLE */
+.date{
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  opacity:0.7;
+}
+
+/* SMALL TEXT */
+p, small{
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  line-height:1.6;
+}
+.names{
+  font-size:78px;
+  line-height:1;
+  margin-bottom:10px;
+}
+
+  body{
+  text-rendering:optimizeLegibility;
+}
+  
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-  font-family:'Jost',sans-serif;
+  font-family:'Inter',sans-serif;
   background: radial-gradient(circle at top,#fff3f6,#f7f0ea,#fdfaf6);
   overflow-x:hidden;
-  perspective:1200px;
 }
 
-/* glow background */
-body::before{
-  content:"";
+/* FLOWERS */
+canvas{
   position:fixed;
   inset:0;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(255,182,193,0.25), transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(255,220,180,0.25), transparent 40%);
   z-index:0;
   pointer-events:none;
 }
 
-/* FLOWERS CANVAS */
-#flower-canvas{
-  position:fixed;
-  inset:0;
-  z-index:1;
-  pointer-events:none;
-}
-
 /* ENVELOPE */
-#envelope{
+#overlay{
   position:fixed;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
   background:linear-gradient(135deg,#f5d4dd,#d8ebf7,#eae2cd);
-  z-index:9999;
+  z-index:999;
+}
+
+.envelope{
+  width:340px;
+  height:220px;
+  position:relative;
   cursor:pointer;
-  transition:opacity 1s ease;
 }
 
-.env-card{
-  padding:30px 40px;
-  border-radius:20px;
-  background:rgba(255,255,255,0.7);
-  backdrop-filter:blur(10px);
-  text-align:center;
-  box-shadow:0 30px 80px rgba(0,0,0,0.15);
+.base{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(145deg,#fff,#f1dfe6);
+  border-radius:14px;
+  box-shadow:0 40px 100px rgba(0,0,0,0.2);
 }
 
-.env-card h1{
-  font-family:'Great Vibes',cursive;
-  color:var(--rose);
+.flap{
+  position:absolute;
+  top:0;
+  width:100%;
+  height:100%;
+  background:linear-gradient(145deg,#f3b9cc,#e79ab3);
+  clip-path:polygon(0 0,100% 0,50% 60%);
+  transform-origin:top;
+  transition:1s cubic-bezier(.2,.8,.2,1);
+}
+
+.envelope.open .flap{
+  transform:rotateX(180deg);
+}
+
+.seal{
+  position:absolute;
+  top:40%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:#b85c74;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Playfair Display',serif;
+  transition:.5s;
+}
+
+.envelope.open .seal{
+  opacity:0;
+  transform:translate(-50%,-50%) scale(0.3);
 }
 
 /* MAIN */
 #main{
   opacity:0;
-  transition:1.2s ease;
+  transition:1.5s ease;
   position:relative;
-  z-index:5;
+  z-index:2;
+  text-align:center;
 }
 
 #main.show{opacity:1;}
 
 /* HERO */
 .hero{
-  height:100vh;
+  min-height:100vh;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  text-align:center;
-  transform-style:preserve-3d;
+  padding:40px;
 }
 
-.hero h1{
-  font-family:'Great Vibes',cursive;
-  font-size:90px;
-  color:var(--rose);
-  text-shadow:0 20px 60px rgba(189,104,123,0.25);
+.names{
+  font-family:'Playfair Display',serif;
+  font-size:76px;
+  color:#b85c74;
 }
 
-/* SECTION BASE */
-section{
-  padding:120px 20px;
-  text-align:center;
-  transform-style:preserve-3d;
+.date{
+  margin-top:10px;
+  font-size:14px;
+  letter-spacing:3px;
+  opacity:0.7;
 }
 
 /* COUNTDOWN */
 .countdown{
   display:flex;
-  justify-content:center;
-  gap:20px;
+  gap:16px;
   margin-top:40px;
+  flex-wrap:wrap;
+  justify-content:center;
 }
 
 .box{
-  background:rgba(255,255,255,0.6);
+  background:rgba(255,255,255,0.7);
   backdrop-filter:blur(10px);
-  padding:20px;
-  border-radius:16px;
+  padding:18px;
+  border-radius:14px;
   min-width:90px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.08);
+  box-shadow:0 20px 50px rgba(0,0,0,0.08);
 }
 
-/* 3D DEPTH */
-.depth{
-  will-change:transform;
+.num{
+  font-size:26px;
+  font-weight:500;
 }
 
-/* TITLE */
-.title{
-  font-size:50px;
-  font-family:'Great Vibes',cursive;
-  color:var(--rose);
+/* SECTION */
+.section{
+  padding:100px 20px;
+  text-align:center;
+  max-width:900px;
+  margin:0 auto;
 }
 
-/* CANVAS FIX */
-canvas{display:block;}
+.card{
+  background:rgba(255,255,255,0.6);
+  backdrop-filter:blur(14px);
+  border-radius:20px;
+  padding:40px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.08);
+}
+
+/* BUTTON */
+.btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:14px 28px;
+  border-radius:30px;
+  background:#b85c74;
+  color:white;
+  text-decoration:none;
+  font-size:13px;
+  letter-spacing:2px;
+}
 </style>
 </head>
 
 <body>
 
-<canvas id="flower-canvas"></canvas>
+<canvas id="canvas"></canvas>
 
 <!-- ENVELOPE -->
-<div id="envelope" onclick="openSite()">
-  <div class="env-card">
-    <h1>Yasemin & Özcan</h1>
-    <p>Düğün Davetiyesi</p>
-    <small>dokun ve aç</small>
+<div id="overlay">
+  <div class="envelope" id="env" onclick="openSite()">
+
+    <div class="base"></div>
+    <div class="flap"></div>
+    <div class="seal">Y&Ö</div>
+
   </div>
 </div>
 
 <!-- MAIN -->
 <div id="main">
 
-  <section class="hero depth">
-    <h1>Yasemin & Özcan</h1>
-    <p>18 Ağustos 2026 • 20:00</p>
+  <div class="hero">
+    <div class="names">Yasemin & Özcan</div>
 
-    <div class="countdown depth">
-      <div class="box"><div id="d">--</div>Gün</div>
-      <div class="box"><div id="h">--</div>Saat</div>
-      <div class="box"><div id="m">--</div>Dakika</div>
-      <div class="box"><div id="s">--</div>Saniye</div>
+    <!-- 📅 DATE (RESTORED) -->
+    <div class="date">18 AĞUSTOS 2026 • 20:00</div>
+
+    <!-- ⏳ COUNTDOWN -->
+    <div class="countdown">
+      <div class="box"><div id="d" class="num">--</div>Gün</div>
+      <div class="box"><div id="h" class="num">--</div>Saat</div>
+      <div class="box"><div id="m" class="num">--</div>Dakika</div>
+      <div class="box"><div id="s" class="num">--</div>Saniye</div>
     </div>
-  </section>
+  </div>
 
-  <section class="depth">
-    <div class="title">Love Story Begins</div>
-    <p>Birlikte yazılan en güzel hikaye…</p>
-  </section>
+  <!-- 📍 DETAILS -->
+  <div class="section">
+    <div class="card">
+      <h2>Etkinlik Detayları</h2>
+      <p>18 Ağustos 2026 • 20:00</p>
+    </div>
+  </div>
 
-  <section class="depth">
-    <div class="title">Location</div>
-    <p>Gloria Wedding Hall • Hatay</p>
-  </section>
+  <!-- 🗺️ LOCATION -->
+  <div class="section">
+    <div class="card">
+      <h2>Mekan</h2>
+      <p>
+        Gloria Wedding Hall<br>
+        Çekmece Kavşağı, Hatay
+      </p>
+
+      <!-- GOOGLE MAPS (RESTORED) -->
+      <a class="btn"
+         href="https://www.google.com/maps?q=Gloria+Wedding+Hall+Hatay"
+         target="_blank">
+        Yol Tarifi Al
+      </a>
+    </div>
+  </div>
 
 </div>
 
@@ -184,12 +286,18 @@ canvas{display:block;}
 
 /* OPEN */
 function openSite(){
-  document.getElementById("envelope").style.opacity="0";
+  document.getElementById("env").classList.add("open");
+
   setTimeout(()=>{
-    document.getElementById("envelope").style.display="none";
+    document.getElementById("overlay").style.opacity="0";
+  },1100);
+
+  setTimeout(()=>{
+    document.getElementById("overlay").style.display="none";
     document.getElementById("main").classList.add("show");
     startCountdown();
-  },1000);
+    startParticles();
+  },1700);
 }
 
 /* COUNTDOWN */
@@ -207,60 +315,40 @@ function startCountdown(){
   },1000);
 }
 
-/* 3D SCROLL */
-const layers=document.querySelectorAll(".depth");
-
-window.addEventListener("scroll",()=>{
-  let y=window.scrollY;
-
-  layers.forEach((el,i)=>{
-    let speed=(i+1)*0.2;
-
-    el.style.transform=`
-      translateY(${y*speed}px)
-      rotateX(${-y*0.02*speed}deg)
-      scale(${1 - y*0.0003*speed})
-    `;
-  });
-});
-
-/* FLOWERS CANVAS */
-const c=document.getElementById("flower-canvas");
+/* FLOWERS */
+const c=document.getElementById("canvas");
 const x=c.getContext("2d");
 
 let w,h;
-function r(){
+function resize(){
   w=c.width=innerWidth;
   h=c.height=innerHeight;
 }
-r();window.addEventListener("resize",r);
+resize();
+window.addEventListener("resize",resize);
 
-const e=["🌸","🌷","🌺","🌿"];
+const emojis=["🌸","🌷","🌺","🌿"];
 const p=[];
 
-for(let i=0;i<70;i++){
-  p.push(make());
-}
-
-function make(){
-  return{
+for(let i=0;i<55;i++){
+  p.push({
     x:Math.random()*w,
     y:Math.random()*-h,
-    s:Math.random()*22+10,
-    vy:Math.random()*1.5+0.5,
     vx:Math.random()*1-0.5,
+    vy:Math.random()*1.2+0.5,
+    s:Math.random()*20+10,
     r:Math.random()*360,
     vr:Math.random()*2-1,
-    e:e[Math.floor(Math.random()*e.length)]
-  };
+    e:emojis[Math.floor(Math.random()*emojis.length)]
+  });
 }
 
-function anim(){
+function draw(){
   x.clearRect(0,0,w,h);
 
   for(let o of p){
-    o.y+=o.vy;
     o.x+=o.vx;
+    o.y+=o.vy;
     o.r+=o.vr;
 
     x.save();
@@ -271,14 +359,17 @@ function anim(){
     x.restore();
 
     if(o.y>h+50){
-      Object.assign(o,make(),{y:-50});
+      o.y=-20;
+      o.x=Math.random()*w;
     }
   }
 
-  requestAnimationFrame(anim);
+  requestAnimationFrame(draw);
 }
-anim();
 
+function startParticles(){
+  draw();
+}
 </script>
 
 </body>
